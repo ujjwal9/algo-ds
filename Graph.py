@@ -163,3 +163,14 @@ graph = [[0,5,INF,10],
          [INF,0,3,INF], 
          [INF, INF, 0,   1], 
          [INF, INF, INF, 0]]
+
+
+#Word boggle
+#consider every character as a starting character and find all possible words using DFS
+
+#Topologocal sort
+
+
+#Convex hull(Graham scan o(nlogn))
+
+

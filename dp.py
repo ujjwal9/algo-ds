@@ -120,6 +120,25 @@ def cut_rod_dp(price, n):
 		for j in xrange(i):
 			dp[i]=max(dp[i], price[j]+dp[i-j-1])
 
+#all the questions where considering all subsets of an array is required use dp[n+1][sum+1]
+#given a set of non negative integers and a sum is there a subset with sum==given sum
+#this is a NP Complete problem but we can solve it in pseudo polynomial time
+def subset_sum(arr, summ):
+	# n>0
+	n=len(arr)
+	dp=[[False for _ in xrange(summ+1)] for _ in xrange(n+1)]
+	for i in xrange(n+1): dp[i][0]=True
+	for i in xrange(1,summ+1): dp[0][i]=False
+	for i in xrange(1,n+1):
+		for j in xrange(1,summ+1):
+			if j<arr[i-1]: dp[i][j]=False
+			if j>=arr[i-1]: dp[i][j]=dp[i-1][j] or dp[i-1][j-arr[i-1]]
+
+
+#Minimum sum partition non negative integers
+def min_sum_partition(arr):
+	subset_sum(arr, sum(arr))
+	#for sum/2 find nearest True
 
 
 

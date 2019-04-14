@@ -143,6 +143,23 @@ def bt_sll(node):
 def bt_dll(node):
 	
 
+#left view of binary tree
+def left_view(node):
+	queue=[]
+	while queue:
+		l=len(queue)
+		print queue[0]
+		for i in xrange(l):
+			node=q.pop(0)
+			if node.left: queue.append(node.left)
+			if node.right: queue.append(node.right)
+
+#check if bst
+
+#bottom view
+
+#level order traversal in spiral form
+
 
 
 
