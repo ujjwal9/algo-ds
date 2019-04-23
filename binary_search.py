@@ -1,0 +1,1 @@
+#Given a sorted and rotated array find a given element using binary search approach.

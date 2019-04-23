@@ -19,3 +19,15 @@ def next_larger_element(arr):
 
 
 #Implement a Stack in which you can get min element in O(1) time and O(1) space.
+
+
+
+#stock span problem
+def stock_span(prices):
+	bigger_price=[]
+	result=[1 for i in xrange(len(prices))]
+	bigger_price.append(prices[0])
+	for i in xrange(len(prices)):
+		while bigger_price and price[bigger_price[-1]]<=price[i]: bigger_price.pop()
+		result[i]=i-bigger_price[-1] if bigger_price else: i+1
+		bigger_price.append(i)

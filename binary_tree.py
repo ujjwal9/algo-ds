@@ -108,8 +108,7 @@ def max_sum_of_nodes_no_two_are_adjacent(node):
 	right=self.max_sum_of_nodes_no_two_are_adjacent(node.right)
 	return max(left+right, node.data)
 
-def lca(node):
-	global lca, n1, n2
+def lca(node,lca=None, n1, n2):
 	if node==None: return False
 	if (self.lca(node.left) and self.lca(node.right) or node.data==n1 or node.data==n2):
 		lca = node.data
@@ -141,7 +140,15 @@ def bt_sll(node):
 
 #flatten binary tree to double linked list
 def bt_dll(node):
-	
+	global prev
+	if node==None: return
+	bt_dll(node.left)
+	if prev==None: head=node
+	else:
+		node.left=prev
+		prev.right=node
+	prev=node
+	bt_dll(node.right)
 
 #left view of binary tree
 def left_view(node):
@@ -157,8 +164,82 @@ def left_view(node):
 #check if bst
 
 #bottom view
+def bottom_view(node):
+	queue=[]
+	queue.append(node)
+	result={}
+	mapping={}
+	mapping[node]=0
+	while queue:
+		l=len(queue)
+		for _ in xrange(l):
+			poped=queue.pop(0)
+			result[mapping[poped]]=poped.val
+			if poped.left: 
+				queue.append(poped.left)
+				mapping[poped.left]=mapping[poped]-1
+			if poped.right:
+				queue.append(poped.right)
+				mapping[poped.right]=mapping[poped]+1
 
 #level order traversal in spiral form
+def level_order_spiral(node):
+	queue=[]
+	eo=1
+	while queue:
+		l=len(queue)
+		lis=[]
+		for i in xrange(l):
+			node=q.pop(0)
+			if node.left: queue.append(node.left)
+			if node.right: queue.append(node.right)
+			lis.append(node)
+		if eo % 2 == 0: print reversed(lis)
+		else print lis
+		eo+=1
+
+#Print the nodes of binary tree as they become the leaf node
+
+
+#check if a binary tree is a subset of another binary tree
+def is_subset_tree(node, subset_node, subset_root):
+	if node==None or subset_node==None: return True
+	if node.val!=subset_node.val: 
+		if node.val==subset_root.val: 
+			return node.val==subset_node.val and 
+			 is_subset_tree(node.left, subset_root.left, subset_root) and 
+			 is_subset_tree(node.right,subset_root.right,subset_root)
+		else: 
+			return node.val==subset_node.val and 
+		 	 is_subset_tree(node.left, subset_root, subset_root) and 
+		 	 is_subset_tree(node.right,subset_root,subset_root)
+	else:
+		left=is_subset_tree(node.left,subset_node.left,subset_root)
+		right=is_subset_tree(node.right,subset_node.right,subset_root)
+		if left and right and subset_root==subset_node: print "subset exists"
+		return left and right
+
+#construct a binary tree from given array in level order fashion
+def construct_complete_binary_tree(arr):
+	for i in xrange(len(arr)): arr[i]=Node(arr[i])
+	for i in xrange(len(arr)):
+		if 2*i+1<len(arr): arr[i].left=arr[2*i+1]
+		if 2*i+2<len(arr): arr[i].right=arr[2*i+2]
+
+#constrcut a binary tree from array
+#https://www.geeksforgeeks.org/construct-a-binary-tree-from-parent-array-representation
+def construct_binary_tree_from(arr):
+	map={}
+	for i in xrange(len(arr)): map[i]=Node(i)
+	for i in xrange(len(arr)):
+		if arr[i]==-1: head=map[i]
+		else:
+			parent=map[arr[i]]
+			if parent.left==None: parent.left=map[i]
+			else parent.right=map[i]
+	
+#given a tree find distance between 2 nodes
+
 
 
 

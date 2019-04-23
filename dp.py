@@ -140,6 +140,20 @@ def min_sum_partition(arr):
 	subset_sum(arr, sum(arr))
 	#for sum/2 find nearest True
 
+#count number of ways to cover a distance with 1, 2 or 3 step
+def ways(distance):
+	dp=[0 for _ in xrange(distance+1)]
+	dp[0],dp[1],dp[2]=1,1,2
+	for i in xrange(3, distance): dp[i]=dp[i-1]+dp[i-2]+dp[i-3]
+
+#Tiling problem given 2xn board and 2x1 tile count no of ways to tile the board if the tile can be placed horizontally or vertically
+def tiling(n):
+	dp=[0 for i in xrange(n+1)]
+	dp[0],dp[1]=1,1
+	for i in xrange(2,n+1) dp[i]=dp[i-1]+dp[i-2]
+
+
+
 
 
 

@@ -168,9 +168,101 @@ graph = [[0,5,INF,10],
 #Word boggle
 #consider every character as a starting character and find all possible words using DFS
 
-#Topologocal sort
+#Topologocal sort for DAG
+def topological_sort(node, stak=[], visited):
+	visited[node]=True
+	for n in graph[node]:
+		if visited[n] is False: topological_sort(n, stak, visited)
+	stak.append(node)
+
+#alien dictinoary
+#take 2 words and find the first not equal alphabet and add and edge to them. Topological sort it
 
 
-#Convex hull(Graham scan o(nlogn))
+#minimum spanning tree
+#Given an undirected and connected graph , a spanning tree of the graph  is a tree that spans 
+#(that is, it includes every vertex of)and is a subgraph of (every edge in the tree belongs to)
+#prims mst greedy algorithm
+class Node():
+	def __init__(self, min_distance):
+		adjacencies=[]
+		min_distance=sys.MAX_INT
+
+
+class Edge():
+	def __init__(self, target, weight):
+		self.target=target
+		self.weight=weight
+
+def prims(root):
+	root.min_distance=0
+	reached_nodes=[]
+	node_queue=[]
+	heapq.heappush(node_queue, (root.min_distance, root))
+	while node_queue:
+		popped=heapq.heappop()
+		reached_nodes.append(popped)
+		for edge in popped.adjacencies:
+			node=edge.target
+			if node not in reached_nodes and node.min_distance>edge.weight:
+				node.min_distance=e.weight
+			heapq.heapify(node_queue)
+
+#Flood fill algorithm O(nxm)
+def dfs(x,y,visited,n,m):
+	if (x<0 or x>n or y<0 or y>n or visited[x][m]): return
+	visited[x][y]=True
+	dfs(x+1,y,visited,n,m)
+	dfs(x,y+1,visited,n,m)
+	dfs(x-1,y+1,visited,n,m)
+	dfs(x-1,y,visited,n,m)
+	dfs(x-1,y-1,visited,n,m)
+	dfs(x,y-1,visited,n,m)
+	dfs(x+1,y+1,visited,n,m)
+
+
+#minimize cash flow among a group of friends who owe each other money
+def get_max_credit(arr):
+	result=0
+	for i in xrange(len(arr)):
+		if arr[i]>arr[result]: result=i
+	return result
+
+def get_max_debit(arr):
+	result=0
+	for i in xrange(len(arr)):
+		if arr[i]<arr[result]: result=i
+	return result
+
+def min_cash_flow(amount):
+	max_credit=get_max_credit()
+	max_debit=get_max_debit()
+	if amount[max_debit]==0 and amount[max_credit]==0: return
+	minn=min(-amount[max_debit],amount[max_credit])
+	amount[max_credit]-=minn
+	amount[max_debit]+=minn
+	print("Person " , max_debit , " pays " , minn, " to Person " , max_credit) 
+	min_cash_flow(amount)
+
+
+# graph[i][j] indicates the amount that person i needs to pay person j 
+graph = [ [0, 1000, 2000], 
+          [0, 0, 5000], 
+          [0, 0, 0] ] 
+
+amount=[0 for _ in xrange(N)]
+for p in xrange(N):
+	for i in xrange(N):
+		amount[p]+=(graph[i][p]-graph[p][i])
+
+min_cash_flow(amount)
+
+
+  
+
+
+
+
+
 
 

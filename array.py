@@ -54,5 +54,8 @@ def segregate_0_1_2(arr):
 			if arr[one]==2 and arr[two]==1: arr[one],arr[two]=arr[two],arr[one]
 	print arr
 
- 
+#trapping rain water
 
+
+
+#Transform One String to Another using Minimum Number of Given Operation
