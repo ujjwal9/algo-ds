@@ -26,8 +26,6 @@ def moves_left(board):
 			if board[3][3]=='_': return True
 	return False
 
-def best_move(board):
-
 def evaluate(board):
 	#checking for rows:
 	for row in xrange(3):
@@ -74,8 +72,6 @@ def minimax(board,depth,is_max):
 					best=min(best,minimax(board,depth+1,!is_max))
 					board[i][j]='_'
 		return best
-
-
 
 def find_best_move(board):
 	best_val=-1000

@@ -1,13 +1,5 @@
 #Dp one way to think is of making 1D array of the total no like knapsack
 # Longest incresing subsequence(LIS), find min no perfect squares
-def lis(arr, n):
-	if n==1: return 1
-	max_ending_here=1
-	for i in xrange(1, n):
-		l=lis(arr, i)
-		if arr[i-1] < arr[n-1]: max_ending_here = max(max_ending_here, l+1)
-	return max_ending_here
-
 def lis_dp(arr):
 	lis=[1]*len(arr)
 	for i in xrange(1, n):
@@ -152,10 +144,12 @@ def tiling(n):
 	dp[0],dp[1]=1,1
 	for i in xrange(2,n+1) dp[i]=dp[i-1]+dp[i-2]
 
+#word break problem
+def word_break_backtracking(s,words):
+	if len(s)==0:return True
+	for i in xrange(1,len(s)):
+		if words.contains(s[0:i]) and word_break_recursive(s[i:],words,answer): return True
+	return False
 
-
-
-
-
-
+def word_break_dp(s,words):
 

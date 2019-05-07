@@ -47,11 +47,11 @@ class Graph:
 						self.visited[child]=True
 						node.append(child)
 
-	def check_cycle_undirected_graph(self):
-		self.DFS(self.graph.keys()[0])
-		for i in self.visited:
-			if i == True: print("Non cyclic")
-			else: print("cyclic")
+	def check_cycle_undirected_graph(self, node, parent):
+		visited[node]=True
+		for adj in graph[node]:
+			if visited[adj] and adj!=parent: print "Cyclic"
+			return check_cycle_undirected_graph(adj, node, parent)
 
 	def check_cycle_DAG(self, node, parents):
 		self.visited[node]=True
@@ -110,6 +110,7 @@ g.BFS(2)
 
 # 3) Between every pair of nodes-
 # → Floyd-Warshall
+#dijkstras and prims are almost same only in dijkstras sum of distance is taken
 class adj_matrix_graph():
 	def __init__(self, vertices):
 		self.V=vertices
@@ -177,7 +178,20 @@ def topological_sort(node, stak=[], visited):
 
 #alien dictinoary
 #take 2 words and find the first not equal alphabet and add and edge to them. Topological sort it
+def alien_dictionary(words):
+	graph=defaultdict(list)
+	for i in xrange(len(words)-1):
+		j=0
+		while j<min(len(words[i]), len(words[i+1])) and words[i][j:j+1]!=words[i+1][j:j+1]: j+=1
+		graph[words[i][j:j+1]].append(words[i+1][j:j+1])
+	visited={}
+	for node in graph.keys(): visited[node]=False
+	result=[]
+	for node in graph.keys():
+		if visited[node]==False: topological_sort(node, visited, result)
+	print result
 
+			
 
 #minimum spanning tree
 #Given an undirected and connected graph , a spanning tree of the graph  is a tree that spans 
@@ -206,6 +220,7 @@ def prims(root):
 			node=edge.target
 			if node not in reached_nodes and node.min_distance>edge.weight:
 				node.min_distance=e.weight
+			heap.heappush(node)
 			heapq.heapify(node_queue)
 
 #Flood fill algorithm O(nxm)
@@ -257,12 +272,4 @@ for p in xrange(N):
 
 min_cash_flow(amount)
 
-
-  
-
-
-
-
-
-
-
+def bellman_ford():

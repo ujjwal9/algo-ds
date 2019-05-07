@@ -31,3 +31,7 @@ def stock_span(prices):
 		while bigger_price and price[bigger_price[-1]]<=price[i]: bigger_price.pop()
 		result[i]=i-bigger_price[-1] if bigger_price else: i+1
 		bigger_price.append(i)
+
+#trapping rain water
+#largest rectangular area in a histogram
+

@@ -1,8 +1,6 @@
-#make recursion not return the result but the terminating condition should be the result
-#bakctracking is_safe should be after for loop ie it should be first checked if the 
-# solution is viable or not or first recur with the values and then for each value it
-# should first check if the value is safe or not. So always first check and recut for 
-# only the valid values as it also makes more sense
+#make recursion not return the result but whether the current state is correct or not the 
+#terminating condition should be the result bakctracking is_safe should be after for loop 
+#ie it should be first checked if the solution is viable or not.
 def permutation(str_arr, start, end):
 	if(start==end-1): 
 		print ''.join(str_arr)
@@ -13,6 +11,12 @@ def permutation(str_arr, start, end):
 			str_arr[start], str_arr[i] = str_arr[i], str_arr[start]
 
 permutation(list("abc"), 0 , 3)
+
+#this is not backtracking algo its simple recursion
+def all_subsets(arr, str, i):
+	if i==len(arr): print str
+	all_subsets(arr, str+arr[i], i+1)
+	all_subsets(arr, str, i+1)
 
 #rat in a maze
 def is_safe(maze, x, y):
@@ -37,9 +41,7 @@ def is_safe(x, y, chess):
 
 
 def knight_tour(x, y, move_x, move_y, chess, i):
-	if i==64:
-		print i 
-		return True
+	if i==64: return True
 	if is_safe(x, y, chess):
 		chess[x][y]=True
 		valid_square=True
@@ -71,7 +73,7 @@ def n_queens(board, col):
 		if is_safe(row, col, board):
 			if n_queens(board, col+1) == True: 
 				return True
-			board[row][col]=0
+		board[row][col]=0
 	return False
 
 N=4

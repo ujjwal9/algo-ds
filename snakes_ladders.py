@@ -25,7 +25,7 @@ def make_graph():
 
 def bfs(graph):
 	q=[]
-	visited=[False]*N
+	# visited=[False]*N
 	q.append(graph[0])
 	turns = 0
 	while q:
@@ -33,8 +33,8 @@ def bfs(graph):
 		for i in xrange(l):
 			node=q.pop(0)
 			if node==N-1: return turns
-			for i in graph[node]:
-				if !visited[node]: q.append(i)
+			for i in graph[node]: q.append(i)
+				# if !visited[node]: q.append(i)
 		turns=turns+1
 
 
