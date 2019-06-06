@@ -6,7 +6,7 @@
 def heapify(arr, n, i):
 	largest=i
 	if 2*i+1<n and arr[i]<arr[2*i+1]: largest=2*i+1
-	if 2*i+1<n and arr[i]<arr[2*i+2]: largest=2*i+2
+	if 2*i+2<n and arr[i]<arr[2*i+2]: largest=2*i+2
 	if largest!=i:
 		arr[i],arr[largest]=arr[largest],arr[i]
 		heapify(arr,n,largest)
@@ -21,4 +21,6 @@ def heapsort(arr):
 	for i in xrange(n-1, -1, -1):
 		arr[i],arr[0]=arr[0],arr[i]
 		heapify(arr, i, 0)
+
+#find k nearest element in an array
 

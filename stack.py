@@ -3,8 +3,7 @@ def next_larger_element(arr):
 	stak=[]
 	result=[]
 	for i in xrange(len(arr)-1,-1,-1):
-		while stak[len(stak)-1]<arr[i]:
-			stak.pop()
+		while stak[len(stak)-1]<arr[i]: stak.pop()
 		result[i] = stak[len(stak)-1] if stak else -1
 		stak.append(arr[i])
 
@@ -22,7 +21,7 @@ def next_larger_element(arr):
 
 
 
-#stock span problem
+#stock span problem. Same as previous greater element simple stack question
 def stock_span(prices):
 	bigger_price=[]
 	result=[1 for i in xrange(len(prices))]

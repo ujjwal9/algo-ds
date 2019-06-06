@@ -1,5 +1,15 @@
+#Topcoder has some good doc on dp
 #Dp one way to think is of making 1D array of the total no like knapsack
+#for recursion solution that requires to loop over all the values use cut rod algorithm
 # Longest incresing subsequence(LIS), find min no perfect squares
+#https://www.geeksforgeeks.org/variations-of-lis-dp-21/
+#Lots of problem on LIS 
+#Building bridges
+#Maximum sum increasing subsequence
+#The longest chain
+#Box Stacking
+#Longest zigzag sequence https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
+#
 def lis_dp(arr):
 	lis=[1]*len(arr)
 	for i in xrange(1, n):
@@ -13,27 +23,36 @@ def lcs(a1, a2. m, n):
 	return max(lcs(a1, a2, m-1,n), lcs(a1, a2, m, n-1))
 
 def lcs_dp(a1, a2):
-	l = [[None]*(len(a1)+1) for i in xrange(len(a2)+1)]
+	l = [[0]*(len(a1)+1) for i in xrange(len(a2)+1)]
 	for i in xrange(len(a1)+1):
 		for j in xrange(len(a2)+1):
-			if i==0 or j==0: l[i][j]=0
-			elif a1[i-1]==a2[j-1]: l[i][j]=1+l[i-1][j-1]
+			if a1[i-1]==a2[j-1]: l[i][j]=1+l[i-1][j-1]
 			else l[i][j]=max(l[i-1][j], l[i][j-1])
 	return l[len(a1)][len(a2)]
 
+def edit_distance(w1,w2):
+	n,m=len(w1),len(w2)
+	dp=[0 for _ in xrange(m+1) for _ in xrange(n+1)]
+	for i in xrange(n+1):
+		for j in xrange(m+1):
+			if i==0: dp[i][j]=m
+			elif j==0: dp[i][j]=n
+			elif w1[n-1]==w2[m-1]: dp[i][j]=dp[i-1][j-1]
+			else dp[i][j]=1+min(dp[i][j-1] #replace
+								dp[i-1][j] #insert
+								dp[i-1][j-1] #replace
+				)
 #knapsack 0-1
 def knapsack(W, wt, val, n):
-	if n==0 or W==0: return return 0
+	if n==0 or W==0: return 0
 	if wt[n-1] > wt: return knapsack(W, wt, val, n-1)
 	else max(val[n-1]+knapsack(W-wt[n-1], wt, val, n-1), knapsack(W, wt, val, n-1))
 
-def knapsack_dp(W, wt, val, n):
-	dp = [[None]*(W+1) for i in xrange(n+1)]
-	for i in xrange(N+1):
-		for w in xrange(W+1):
-			if i==0 or w==0: dp[i][w]=0
-			elif wt[i-1]<=w: dp[i][w]=max(dp[i-1][w], dp[i-1][w-wt[i-1]]+val[i-1])
-			else: dp[i][w]=dp[i-1][w]
+def knapsack_dp(W,wt,val,n):
+	dp=[0]*(W+1)
+	for i in xrange(len(wt)):
+		for j in xrange(W, wt[i]-1,-1):
+			dp[j]=max(dp[j],val[i]+dp[j-wt[i]])
 
 #unbounded knapsack
 def unbounded_knapsack(W, wt, val, n):
@@ -60,11 +79,9 @@ def min_coins(coins, N):
 		for coin in coins:
 			if coin<=i: dp[i]=min(dp[i],dp[i-coin]+1)
 
-#you can traverse down, right and lower diagonally till m,n
+#you can traverse down, right and lower diagonally till m,n all values positive
 def min_cost_path(cost, m, n):
 	dp[]=[[0 for _ in xrange(m+1) for _ in xrange(n+1)]]
-	for i in xrange(m+1): dp[0][i]=cost[0][m]+dp[0][m-1]
-	for i in xrange(n+1): dp[n][0]=cost[n][0]+dp[n-1][0]
 	for i in xrange(1,m+1):
 		for j in xrange(1,n+1):
 			dp[i][j]=min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+cost[i,j]
@@ -102,13 +119,14 @@ def egg_drop_dp(eggs, floors):
 def cut_rod(price, n):
 	if n<=0: return 0
 	max_value=-sys.maxint
-	for i in xrange(start, end): max_value = max(max_value, price[i]+cut_rod(start, n-1-i))	
+	for i in xrange(0, n): max_value = max(max_value, price[i]+cut_rod(start, n-1-i))	
 	return max_value
 
-def cut_rod_dp(price, n):
-	dp=[-sys.maxint for _ in xrange(n+1)]
+#precalculated values in dp
+def cut_rod_dp(price):
+	dp=[-sys.maxint for _ in xrange(len(arr)+1)]
 	dp[0]=0
-	for i in xrange(1, n+1):
+	for i in xrange(1, len(arr)+1):
 		for j in xrange(i):
 			dp[i]=max(dp[i], price[j]+dp[i-j-1])
 
@@ -145,11 +163,97 @@ def tiling(n):
 	for i in xrange(2,n+1) dp[i]=dp[i-1]+dp[i-2]
 
 #word break problem
-def word_break_backtracking(s,words):
-	if len(s)==0:return True
-	for i in xrange(1,len(s)):
-		if words.contains(s[0:i]) and word_break_recursive(s[i:],words,answer): return True
-	return False
+public boolean wordBreak(String s, Set<String> wordDict) {
+    int[] pos = new int[s.length()+1];
+ 
+    Arrays.fill(pos, -1);
+ 
+    pos[0]=0;
+ 
+    for(int i=0; i<s.length(); i++){
+        if(pos[i]!=-1){
+            for(int j=i+1; j<=s.length(); j++){
+                String sub = s.substring(i, j);
+                if(wordDict.contains(sub)){
+                    pos[j]=i;
+                }
+            } 
+        }
+    }
+ 
+    return pos[s.length()]!=-1;
+}
 
-def word_break_dp(s,words):
+#How to print maximum number of A’s using given four keys
+def max_a(n):
+	if n<7: return n;
+	dp[n+1]=[0]*(n+1)
+	dp[1],dp[2],dp[3],dp[4],dp[5],dp[6]=1,2,3,4,5,6
+	for i in xrange(7, n+1):
+		for j in xrange(i-3,1,-1): dp[i]=max(dp[i], dp[j]*(i-j-1))
+
+#longest palindromic sequence
+dp = [1 for _ in xrange(n) for _ in xrange(n)]
+for i in xrange(n):
+	for s in xrange(n-i):
+		e=s+i
+        if str[i] == str[j]: L[i][j] = L[i+1][j-1] + 2
+        else: L[i][j] = max(L[i][j-1], L[i+1][j])
+
+#longest palindromic substring
+def lps(str): 
+    n = len(str) 
+    L = [[0 for x in range(n)] for x in range(n)] 
+    for i in range(n): 
+        L[i][i] = 1
+    for cl in range(1, n+1): 
+        for i in range(n-cl): 
+            j = i+cl
+            if str[i] == str[j]: L[i][j] = L[i+1][j-1] + 2
+            else: L[i][j] = max(L[i][j-1], L[i+1][j])
+  
+    return L[0][n-1] 
+
+#longest bitonic sequence. Bitonic sequence are sequences which are first increasing then decreasing
+#Make 2 arrays. First array inc[i] contains the no of increasing sequence till i and second decr[i]
+#which contains no of decreasing sequence after i. Then sum up both 
+
+#matrix chain multiplication. The dp version is an example of a diagonal dp which can be used
+#to do any calculations which involve with the elements with all the subarray.
+#Cuts in an array: digonal dp
+def matrix_chain_multiplication(p,i,j):
+	if i==j: return 0
+	minn=sys.maxsize
+	for k in xrange(i,j): #think of k as a seperator you put
+		minn=min(minn, p[i-1]*p[k]*p[j]
+			+matrix_chain_multiplication(p,i,k)
+			+matrix_chain_multiplication(p,k+1,j))
+	return minn
+
+matrix_chain_multiplication(p,1,len(p))
+
+def MatrixChainOrder(p, n): 
+    for i in range(1, n): 
+        m[i][i] = 0
+    for L in range(2, n): 
+        for i in range(1, n-L+1): 
+            j = i+L-1
+            m[i][j] = sys.maxint 
+            for k in range(i, j): 
+                q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j] 
+                if q < m[i][j]: 
+                    m[i][j] = q 
+  
+    return m[1][n-1]
+
+#palindrome partitioning. https://www.geeksforgeeks.org/palindrome-partitioning-dp-17/
+
+# min_palindromic_partitions(arr, i, j) = Min {min_palindromic_partitions(arr,i,k)
+#											   min_palindromic_partitions(arr,k+1,j)+1}
+def min_palindromic_partitions_memoization(arr,i,j,map):
+	if i>j: return 0
+	
+
+
+
 

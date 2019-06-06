@@ -44,7 +44,7 @@ def split(arr,start,end):
 		merge(arr,start,end)
 
 #quick sort
-#make first element as pivot
+#make first element as pivot.Its a two pointer question.
 def partition(arr,start,end):
 	i=start+1
 	pivot=arr[start]
@@ -89,6 +89,16 @@ def merge_k_sorted_arrays(arr,k):
 #Minimum number of swaps required to sort an array
 #sort the array and then loop over the wrong array and keep putting the value at correct position
 
+===========================================================
 
+#Maximum number of partitions that can be sorted individually to make sorted
+def maxPartitions(arr, n): 
+    ans = 0; max_so_far = 0
+    for i in range(0, n):  
+        max_so_far = max(max_so_far, arr[i]) 
+          if (max_so_far == i): 
+            ans += 1
+    return ans 
+ 
 
 

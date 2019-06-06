@@ -21,7 +21,7 @@ public class LRUCache{
 		map = new HashMap();
 	}
 
-	public void set(int key, int value){
+	public void updateOrAddEntry(int key, int value){
 		if(map.containskey(key)){
 			Entry entry = map.get(key);
 			entry.value = value;

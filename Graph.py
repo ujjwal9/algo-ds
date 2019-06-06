@@ -175,6 +175,7 @@ def topological_sort(node, stak=[], visited):
 	for n in graph[node]:
 		if visited[n] is False: topological_sort(n, stak, visited)
 	stak.append(node)
+reversed(stak)
 
 #alien dictinoary
 #take 2 words and find the first not equal alphabet and add and edge to them. Topological sort it
@@ -273,3 +274,36 @@ for p in xrange(N):
 min_cash_flow(amount)
 
 def bellman_ford():
+
+
+#minimum steps to reach target by a knight. BFS
+
+#Minimum time required to rot all oranges. BFS
+
+#https://leetcode.com/problems/word-ladder/
+#word ladder
+def one_diff(self,w1,w2):
+  c=0
+  for i in xrange(len(w1)):
+  if w1[i:i+1]!=w2[i:i+1]: c+=1
+  if c==1:return True
+  else: return False
+        
+  def ladderLength(self, beginWord, endWord, wordList):
+  	if endWord not in wordList: return 0
+    result=1
+    q=[]
+    visited=[False]*len(wordList)
+    q.append(beginWord)
+    while q:
+      times=len(q)
+      result+=1
+      for i in xrange(len(q)):
+        w=q.pop(0)
+        for i in xrange(len(wordList)):
+          if visited[i]==False and one_diff(w,wordList[i]) and w!=wordList[i]:
+            if wordList[i]==endWord: return result
+              q.append(wordList[i])
+              visited[i]=True
+    return 0
+

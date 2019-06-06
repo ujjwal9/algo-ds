@@ -46,7 +46,7 @@ def knight_tour(x, y, move_x, move_y, chess, i):
 		chess[x][y]=True
 		valid_square=True
 		for i in xrange(8):
-			valid_square = valid_square or knight_tour(x+move_x[i], y+move_y[i], move_x, move_y, chess, i+1)
+			valid_square = knight_tour(x+move_x[i], y+move_y[i], move_x, move_y, chess, i+1)
 			if valid_square: return True
 	chess[x][y]=False
 	return False		

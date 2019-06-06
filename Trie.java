@@ -1,5 +1,5 @@
 class TrieNode{
-	HashMap<Character, TrieNode> children;
+	HashMap<Character, TrieNode> children = new HashMap<>();
 	String content;
 	boolean isWord;
 }

@@ -4,6 +4,15 @@ class Node:
 		self.left=None
 		self.right=None
 
+def height(node):
+	if node==None: return 0
+	return max(height(node.left), height(node.right))+1
+
+def depth(node,d=0):
+	if node==None: return
+	depth(node.left,d+1)
+	depth(node.right,d+1)
+
 def preorder(node):
 	if node=None: return
 	print node.data
@@ -47,13 +56,13 @@ def postorder_without_recursion(root):
 def inorder_without_recursion(root):
 	stack=[]
 	node=root
-	while stack or node is not None:
-		if node is not None:
+	while stack or node :
+		if node:
 			stack.append(node)
 			node=node.left
 		else:
 			node=stack.pop()
-			print node.val
+			if node: print node.val
 			node=node.right
 
 def levelorder(root):
@@ -134,31 +143,28 @@ def left_view(node):
 def lca(node,lca=None, n1, n2):
 	if node==None: return False
 	left,right=self.lca(node.left),self.lca(node.right)
-	if (left and right or ((node.data==n1 or node.data==n2) and (left or right))): lca = node.data
+	if ((left and right) or ((node.data==n1 or node.data==n2) and (left or right))): lca = node.data
 	return left or right
 
 #four possibilities of sum at a node
 def max_path_sum(node):
 	global max_path_sum
 	if node==None: return 0
-	left=self.max_path_sum(node.left)
-	right=self.max_path_sum(node.right)
+	left,right=max_path_sum(node.left),max_path_sum(node.right)
 	max_path_sum=max(left+right+node.data, node.data, node.data+left, node.data+right, max_path_sum)
 	return max(node.data, node.data+left, node.data+right)
 
 def max_path_sum_leaf_to_leaf(node):
 	global max_path_sum
 	if node==None: return 0
-	left=self.max_path_sum_leaf_to_leaf(node.left)
-	right=self.max_path_sum_leaf_to_leaf(node.right)
+	left,right=max_path_sum_leaf_to_leaf(node.left),max_path_sum_leaf_to_leaf(node.right)
 	max_path_sum=max(max_path_sum, left+right+node.data)
 	return max(max(left, right)+ node.data)
 
 def max_sum_of_nodes_no_two_are_adjacent(node):
 	global maxx
 	if node==None: return 0
-	left=self.max_sum_of_nodes_no_two_are_adjacent(node.left)
-	right=self.max_sum_of_nodes_no_two_are_adjacent(node.right)
+	left,right=max_sum_of_nodes_no_two_are_adjacent(node.left),max_sum_of_nodes_no_two_are_adjacent(node.right)
 	return max(left+right, node.data)
 
 def invert(node):
@@ -170,9 +176,6 @@ def invert(node):
 	return node
 
 #flatten binary tree to single linked list
-def last_right(node):
-	if node.left==None and node.right==None: return node
-	return last_right(node.right)
 	
 def bt_sll(node):
 	if node==None: return
@@ -180,7 +183,8 @@ def bt_sll(node):
 	right=bt_sll(node.right)
 	if left is not None:
 		node.right=left
-		last_right(left).right=right
+		while(left.right!=None): left=left.right
+		left.right=right
 		node.left=None
 	return node
 
@@ -198,12 +202,24 @@ def bt_dll(node):
 	bt_dll(node.right)
 
 
-#check if bst
+#check if bst. Inorder travesral of the tree like swapped two nodes question keep a pointer at the prev node
+#if the previous node is bigger than the current node then the tree is not bst
+def is_bst(node):
+	if node.left: is_bst(node.left)
+	if prev:
+		if prev.val>node.val: print "not bst"
+	prev=node
+	if node.right: is_bst(node.right)
 
 
 
 #Print the nodes of binary tree as they become the leaf node
-
+#Keep a hashmap and then put(height, node.val).Calculate the height of each node order=max(left, right)
+def print_nodes_bt_as_they_become_leaf_node(node,map=defaultdict(list)):
+	if node==None: return 0
+	order=max(ordered(node.left), ordered(node.right))+1
+	map[order].append(node.val)
+	return order
 
 #check if a binary tree is a subset of another binary tree for every node check if the subtree are equal
 def is_subset_tree(node, subset_node, subset_root):
@@ -228,7 +244,10 @@ def construct_binary_tree_from(arr):
 			if parent.left==None: parent.left=map[i]
 			else parent.right=map[i]
 	
-#given a tree find distance between 2 nodes
+#given a tree find distance between 2 nodes. Find the LCA of both the nodes and then use 
+#distance(root,node1)+distance(root,node2)-2LCA
+
+
 
 
 
