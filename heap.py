@@ -2,6 +2,8 @@
 #Parent node is greater or smaller than the leaf nodes => i => 2*i+1, 2*i+2 index at 0
 #Build a max heap tree O(n)
 #Extract max k times O(klogn+n)
+#https://www.geeksforgeeks.org/heap-data-structure/
+
 
 def heapify(arr, n, i):
 	largest=i
@@ -23,4 +25,23 @@ def heapsort(arr):
 		heapify(arr, i, 0)
 
 #find k nearest element in an array
+
+#sort a k sorted array
+def k_sorted_array(arr,k):
+	heap=arr[:k+1]
+	heapify(heap)
+	index=0
+	for i in xrange(k+1: len(arr)):
+		arr[index]=heappop(heap)
+		heappush(heap,arr[i])
+		index+=1
+	while heap:
+		arr[index]=heappop(heap)
+		index+=1
+
+#median in a stream of integers
+#heap.heapify() for min heap and heap._heapify_max() for max heap
+
+
+#kth largest or smallest element in heap
 

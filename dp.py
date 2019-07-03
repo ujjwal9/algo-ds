@@ -8,6 +8,7 @@
 #Maximum sum increasing subsequence
 #The longest chain
 #Box Stacking
+#Always solve https://www.sanfoundry.com/dynamic-programming-problems-solutions/
 #Longest zigzag sequence https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
 #
 def lis_dp(arr):
@@ -116,6 +117,7 @@ def egg_drop_dp(eggs, floors):
 				dp[i][j] = min(dp[i][j], 1+max(dp[i-1][x-1],dp[i][j-x]))
 	return dp[n][k]
 
+#go through a loop for all the cases
 def cut_rod(price, n):
 	if n<=0: return 0
 	max_value=-sys.maxint
@@ -192,27 +194,6 @@ def max_a(n):
 	for i in xrange(7, n+1):
 		for j in xrange(i-3,1,-1): dp[i]=max(dp[i], dp[j]*(i-j-1))
 
-#longest palindromic sequence
-dp = [1 for _ in xrange(n) for _ in xrange(n)]
-for i in xrange(n):
-	for s in xrange(n-i):
-		e=s+i
-        if str[i] == str[j]: L[i][j] = L[i+1][j-1] + 2
-        else: L[i][j] = max(L[i][j-1], L[i+1][j])
-
-#longest palindromic substring
-def lps(str): 
-    n = len(str) 
-    L = [[0 for x in range(n)] for x in range(n)] 
-    for i in range(n): 
-        L[i][i] = 1
-    for cl in range(1, n+1): 
-        for i in range(n-cl): 
-            j = i+cl
-            if str[i] == str[j]: L[i][j] = L[i+1][j-1] + 2
-            else: L[i][j] = max(L[i][j-1], L[i+1][j])
-  
-    return L[0][n-1] 
 
 #longest bitonic sequence. Bitonic sequence are sequences which are first increasing then decreasing
 #Make 2 arrays. First array inc[i] contains the no of increasing sequence till i and second decr[i]
@@ -232,17 +213,16 @@ def matrix_chain_multiplication(p,i,j):
 
 matrix_chain_multiplication(p,1,len(p))
 
+#somewhat same as palindromic substring
 def MatrixChainOrder(p, n): 
     for i in range(1, n): 
         m[i][i] = 0
-    for L in range(2, n): 
-        for i in range(1, n-L+1): 
-            j = i+L-1
+    for L in range(1, n): 
+        for i in range(n-L): 
+            j = i+L
             m[i][j] = sys.maxint 
             for k in range(i, j): 
-                q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j] 
-                if q < m[i][j]: 
-                    m[i][j] = q 
+            	m[i][j] = max(m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j], m[i][j])
   
     return m[1][n-1]
 
@@ -253,7 +233,41 @@ def MatrixChainOrder(p, n):
 def min_palindromic_partitions_memoization(arr,i,j,map):
 	if i>j: return 0
 	
+#word wrap
+def word_wrap(arr, dp, N, i):
+	if i > len(arr): return 0
+	minn=0
+	for j in xrange(N):
+		if dp[i+j]: 
+			minn=min(minn, word_wrap(arr,dp,N,i+j+1)+(N-j)^3)
+	return minn
 
+dp=[False]*(len(arr))
+for i in arr:
+	if i+1>len(arr) or arr[i+1]==' ': dp[i]=True
+word_wrap(arr,dp,N,0)
 
+#https://www.geeksforgeeks.org/mobile-numeric-keypad-problem/
+#mobile numeric keyboard problem
+#dfs on a graph. For memoization
+def recursive(graph,c=0,N,num):
+	global total
+	if c==N: 
+		total+=1
+		return
+	for i in graph[num]: recursive(graph,c+1,N,i)
 
+graph={}
+graph[0]=[0,8]
+graph[1]=[1,2]
+graph[2]=[1,2,5,3]
+graph[3]=[2,3,6]
+graph[4]=[1,4,5,7]
+graph[5]=[2,4,5,6,8]
+graph[6]=[3,5,6,9]
+graph[7]=[4,7,8]
+graph[8]=[5,7,8,9,0]
+graph[9]=[6,8,9]
 
+FLNE QXFA FC4W Y4
+FLAH 2LHQ 	VL6K U4

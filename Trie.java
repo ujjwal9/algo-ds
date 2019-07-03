@@ -1,3 +1,4 @@
+//Whenever there is a question of word search use trie
 class TrieNode{
 	HashMap<Character, TrieNode> children = new HashMap<>();
 	String content;
@@ -47,4 +48,7 @@ class Trie{
 		return false;
 	}
 }
+
+//Print all valid words that are possible using Characters of Array
+//Given a continuous stream of strings, maintain strings such that duplicate are eliminated on the fly
 

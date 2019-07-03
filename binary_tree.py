@@ -13,6 +13,14 @@ def depth(node,d=0):
 	depth(node.left,d+1)
 	depth(node.right,d+1)
 
+#diameter or the width of a tree is the number of nodes on the longest path between two end nodes
+def diameter(node):
+	global result
+	if node is None: return 0
+	left,right=diameter(node.left),diameter(node.right)
+	result=max(result,1+left+right)
+	return max(left,right)
+
 def preorder(node):
 	if node=None: return
 	print node.data
@@ -94,6 +102,29 @@ def vertical_order_traversal(node):
         result.append(d[i])
     return result
 
+#level order traversal in spiral form
+def level_order_spiral(node):
+	queue=[]
+	eo=1
+	while queue:
+		l=len(queue)
+		lis=[]
+		for i in xrange(l):
+			node=q.pop(0)
+			if node.left: queue.append(node.left)
+			if node.right: queue.append(node.right)
+			lis.append(node)
+		if eo % 2 == 0: print reversed(lis)
+		else print lis
+		eo+=1
+
+#diagonal traversal
+def diagonal_traversal(node,index=0,map=defaultdict(list)):
+	if not node: return
+	map[index].append(node.val)
+	diagonal_traversal(node.left,index+1,map)
+	diagonal_traversal(node.right,index,map)
+
 #bottom view is created by vertical order traveral
 def bottom_view(node):
 	queue=[]
@@ -113,22 +144,6 @@ def bottom_view(node):
 				queue.append(poped.right)
 				mapping[poped.right]=mapping[poped]+1
 
-#level order traversal in spiral form
-def level_order_spiral(node):
-	queue=[]
-	eo=1
-	while queue:
-		l=len(queue)
-		lis=[]
-		for i in xrange(l):
-			node=q.pop(0)
-			if node.left: queue.append(node.left)
-			if node.right: queue.append(node.right)
-			lis.append(node)
-		if eo % 2 == 0: print reversed(lis)
-		else print lis
-		eo+=1
-
 #left view of binary tree
 def left_view(node):
 	queue=[]
@@ -140,11 +155,12 @@ def left_view(node):
 			if node.left: queue.append(node.left)
 			if node.right: queue.append(node.right)
 
-def lca(node,lca=None, n1, n2):
-	if node==None: return False
-	left,right=self.lca(node.left),self.lca(node.right)
-	if ((left and right) or ((node.data==n1 or node.data==n2) and (left or right))): lca = node.data
-	return left or right
+def lca(root, p, q):
+	if root is None: return None
+    left,right=lca(root.left,p,q),lca(root.right,p,q)
+    if (right and left) or (right and (root.val==p.val or root.val==q.val)) or (left and (root.val==p.val or root.val==q.val)): return root
+    if root.val==p.val or root.val==q.val: return root
+    return right or left
 
 #four possibilities of sum at a node
 def max_path_sum(node):
@@ -162,7 +178,6 @@ def max_path_sum_leaf_to_leaf(node):
 	return max(max(left, right)+ node.data)
 
 def max_sum_of_nodes_no_two_are_adjacent(node):
-	global maxx
 	if node==None: return 0
 	left,right=max_sum_of_nodes_no_two_are_adjacent(node.left),max_sum_of_nodes_no_two_are_adjacent(node.right)
 	return max(left+right, node.data)
@@ -246,6 +261,17 @@ def construct_binary_tree_from(arr):
 	
 #given a tree find distance between 2 nodes. Find the LCA of both the nodes and then use 
 #distance(root,node1)+distance(root,node2)-2LCA
+
+#boundary traversal of a binary tree
+#left boudary leaving the last element. All leaf nodes and the right boundary in reverse
+
+#Print all nodes at distance k from a given node
+
+
+#given a binary tree how long will it take to burn the whole tree
+#if node on fire then max(l,r) else m+l
+
+
 
 
 

@@ -45,12 +45,13 @@ def segregate_0_1_2(arr):
 		while arr[zero]==0:zero+=1
 		while arr[one]==1: one+=1
 		while arr[two]==2: two-=1
+		if one<zero: one+=1
 		if zero<=one and one <= two:
 			if (arr[one]==0 and (arr[zero]==1 or arr[zero]==2)): arr[zero],arr[one]=arr[one],arr[zero]
 			if (arr[two]==0 and (arr[zero]==1 or arr[zero]==2)): arr[two],arr[zero]=arr[zero],arr[two]
 			if arr[two]==1 and arr[one]==2: arr[one],arr[two]=arr[two],arr[one]	
 	print arr
-segregate_0_1_2([1,1,1,2,2,0,0,0,2,2,2,0,0,0,0,1,2,1,0,0,1])
+segregate_0_1_2([0,0,1,2,2,0,1])
 
 #trapping rain water. Keep an array of larger building on the left side and an array of larger building on 
 #the right side and then get the difference in indices
@@ -94,3 +95,28 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 
 #Find the smallest window in a string containing all characters of another string
 #https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
+
+
+#Given an array A[] and a number x, check for pair in A[] with sum as x
+#sort the array and then 
+
+#Same can be used to get a triplet of a particular sum
+
+#Shuffle a given array using Fisher–Yates shuffle Algorithm
+
+#Stock Buy Sell to Maximize Profit
+#find the local minima and local maxima and substract it and do for remaining array
+def f(price):
+	if len(price)<2: return
+	buy,sell=[],[]
+	i=0
+	while i<len(price):
+		while i<len(price)-1 and price[i+1]<=price[i]: i+=1
+		if i==len(arr)-1: return
+		buy.append(i+1)
+		while i<len(price) and price[i]>=price[i-1]: i+=1
+		sell.append(i-1)
+
+
+
+

@@ -1,17 +1,17 @@
-def check(num):
-    one,two,three=False,False,False
-    a=num
-    while a!=0:
-        if a%10==1: one=True
-        elif a%10==2: two=True
-        elif a%10==3: three=True
-        a=a/10
-    return one and two and three
-
-def findQualifiedNumbers(numberArray):
-    result=[]
-    for i in numberArray:
-        if check(i): result.append(i)
-    return ','.join(map(str,sorted(result)))
-
-print findQualifiedNumbers([2])
+arr=[[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
+dp = [[0 for _ in xrange(len(arr))] for _ in xrange(len(arr))]
+for i in xrange(len(arr)):
+    dp[i][0]=arr[i][0]
+    dp[0][i]=arr[0][i]
+for i in xrange(1,len(arr)):
+    for j in xrange(1,len(arr)):
+        print i,j,dp[i-1][j-1]
+        if arr[i-1][j]==1:
+            dp[i][j]=min(arr[i][j-1],arr[i][j]==1,arr[i-1][j-1])
+        else: dp[i][j]=0
+result=0
+print dp
+for i in xrange(len(arr)):
+    for j in xrange(len(arr)):
+        result=max(result,dp[i][j])
+print result

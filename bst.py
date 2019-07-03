@@ -1,5 +1,4 @@
 #bst main property is that the inorder traversal will give you a sorted array.
-#Questions are based accordingly 
 class Node:
 	def __init__(self, val):
 		self.left=None
@@ -45,7 +44,7 @@ def swapped(node):
             dp[i]+=left*right
     return dp[n]
 
-#is bst
+#is bst. Inorder traversal should be sorted
 def isBst(node):
 	global prev,result
   if node.left: isBst(node.left)
@@ -53,6 +52,8 @@ def isBst(node):
   else: result=result and True
   prev=node
   if node.right: isBst(node.right)
+
+#check if a triplet with given sum exists
 
 
   
