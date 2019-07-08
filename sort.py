@@ -61,8 +61,6 @@ def quick_sort(arr,start,end):
 		quick_sort(arr,start,p-1)
 		quick_sort(arr,p+1,end)
 
-
-
 # ======================================================
 # #nuts and bolts
 

@@ -4,6 +4,7 @@ class Node:
 		self.left=None
 		self.right=None
 
+===================================================================================================================
 def height(node):
 	if node==None: return 0
 	return max(height(node.left), height(node.right))+1
@@ -20,6 +21,8 @@ def diameter(node):
 	left,right=diameter(node.left),diameter(node.right)
 	result=max(result,1+left+right)
 	return max(left,right)
+
+===================================================================================================================
 
 def preorder(node):
 	if node=None: return
@@ -38,6 +41,59 @@ def postorder(node):
 	postorder(node.left)
 	postorder(node.right)
 	print node.data
+
+def levelorder(root):
+	queue=[]
+	queue.append(root)
+	while queue:
+		for _ in xrange(size(queue)):
+			node=queue.pop(0)
+			print node.data
+			if node.left:queue.append(node.left)
+			if node.right:queue.append(node.right)
+		print '\n'
+
+def vertical_order_traversal(node):
+	if A is None: return []
+	q=[]
+    q.append((0,A))
+    d=defaultdict(list)
+    while q:
+        l=len(q)
+        for _ in xrange(l):
+            node=q.pop(0)
+            d[node[0]].append(node[1].val)
+            if node[1].left is not None: q.append((node[0]-1,node[1].left))
+            if node[1].right is not None: q.append((node[0]+1,node[1].right))
+    result=[]
+    for i in sorted(d.keys()):
+        result.append(d[i])
+    return result
+
+def level_order_spiral(node):
+	queue=[]
+	eo=1
+	while queue:
+		l=len(queue)
+		lis=[]
+		for i in xrange(l):
+			node=q.pop(0)
+			if node.left: queue.append(node.left)
+			if node.right: queue.append(node.right)
+			lis.append(node)
+		if eo % 2 == 0: print reversed(lis)
+		else print lis
+		eo+=1
+
+def diagonal_traversal(node,index=0,map=defaultdict(list)):
+	if not node: return
+	map[index].append(node.val)
+	diagonal_traversal(node.left,index+1,map)
+	diagonal_traversal(node.right,index,map)
+
+#boundary traversal of a binary tree
+#left boudary leaving the last element. All leaf nodes and the right boundary in reverse
+===================================================================================================================
 
 #using stack
 def preorder_without_recursion(root):
@@ -73,57 +129,7 @@ def inorder_without_recursion(root):
 			if node: print node.val
 			node=node.right
 
-def levelorder(root):
-	queue=[]
-	queue.append(root)
-	while queue:
-		for _ in xrange(size(queue)):
-			node=queue.pop(0)
-			print node.data
-			if node.left:queue.append(node.left)
-			if node.right:queue.append(node.right)
-		print '\n'
-
-#If 2 Tree Nodes shares the same vertical level then the one with lesser depth will come first. Level order traversing.
-def vertical_order_traversal(node):
-	if A is None: return []
-	q=[]
-    q.append((0,A))
-    d=defaultdict(list)
-    while q:
-        l=len(q)
-        for _ in xrange(l):
-            node=q.pop(0)
-            d[node[0]].append(node[1].val)
-            if node[1].left is not None: q.append((node[0]-1,node[1].left))
-            if node[1].right is not None: q.append((node[0]+1,node[1].right))
-    result=[]
-    for i in sorted(d.keys()):
-        result.append(d[i])
-    return result
-
-#level order traversal in spiral form
-def level_order_spiral(node):
-	queue=[]
-	eo=1
-	while queue:
-		l=len(queue)
-		lis=[]
-		for i in xrange(l):
-			node=q.pop(0)
-			if node.left: queue.append(node.left)
-			if node.right: queue.append(node.right)
-			lis.append(node)
-		if eo % 2 == 0: print reversed(lis)
-		else print lis
-		eo+=1
-
-#diagonal traversal
-def diagonal_traversal(node,index=0,map=defaultdict(list)):
-	if not node: return
-	map[index].append(node.val)
-	diagonal_traversal(node.left,index+1,map)
-	diagonal_traversal(node.right,index,map)
+===================================================================================================================
 
 #bottom view is created by vertical order traveral
 def bottom_view(node):
@@ -155,12 +161,19 @@ def left_view(node):
 			if node.left: queue.append(node.left)
 			if node.right: queue.append(node.right)
 
+===================================================================================================================
+
 def lca(root, p, q):
 	if root is None: return None
     left,right=lca(root.left,p,q),lca(root.right,p,q)
     if (right and left) or (right and (root.val==p.val or root.val==q.val)) or (left and (root.val==p.val or root.val==q.val)): return root
     if root.val==p.val or root.val==q.val: return root
     return right or left
+
+#given a tree find distance between 2 nodes. Find the LCA of both the nodes and then use 
+#distance(root,node1)+distance(root,node2)-2LCA
+
+===================================================================================================================
 
 #four possibilities of sum at a node
 def max_path_sum(node):
@@ -182,6 +195,8 @@ def max_sum_of_nodes_no_two_are_adjacent(node):
 	left,right=max_sum_of_nodes_no_two_are_adjacent(node.left),max_sum_of_nodes_no_two_are_adjacent(node.right)
 	return max(left+right, node.data)
 
+===================================================================================================================
+
 def invert(node):
 	if node==None: return
 	left=invert(node.left)
@@ -189,6 +204,8 @@ def invert(node):
 	node.left=right
 	node.right=left
 	return node
+
+===================================================================================================================
 
 #flatten binary tree to single linked list
 	
@@ -216,17 +233,7 @@ def bt_dll(node):
 	prev=node
 	bt_dll(node.right)
 
-
-#check if bst. Inorder travesral of the tree like swapped two nodes question keep a pointer at the prev node
-#if the previous node is bigger than the current node then the tree is not bst
-def is_bst(node):
-	if node.left: is_bst(node.left)
-	if prev:
-		if prev.val>node.val: print "not bst"
-	prev=node
-	if node.right: is_bst(node.right)
-
-
+===================================================================================================================
 
 #Print the nodes of binary tree as they become the leaf node
 #Keep a hashmap and then put(height, node.val).Calculate the height of each node order=max(left, right)
@@ -236,9 +243,14 @@ def print_nodes_bt_as_they_become_leaf_node(node,map=defaultdict(list)):
 	map[order].append(node.val)
 	return order
 
+#given a binary tree how long will it take to burn the whole tree
+#if node on fire then max(l,r) else m+l
+===================================================================================================================
+
 #check if a binary tree is a subset of another binary tree for every node check if the subtree are equal
 def is_subset_tree(node, subset_node, subset_root):
 	
+===================================================================================================================
 
 #construct a binary tree from given array in level order fashion
 def construct_complete_binary_tree(arr):
@@ -258,25 +270,53 @@ def construct_binary_tree_from(arr):
 			parent=map[arr[i]]
 			if parent.left==None: parent.left=map[i]
 			else parent.right=map[i]
-	
-#given a tree find distance between 2 nodes. Find the LCA of both the nodes and then use 
-#distance(root,node1)+distance(root,node2)-2LCA
 
-#boundary traversal of a binary tree
-#left boudary leaving the last element. All leaf nodes and the right boundary in reverse
+===================================================================================================================
+
+def all_full_binary_tree(node):
+
+
+#unique bst from of an arrary from 1..n
+def numTrees(self, n):
+	dp=[0]*(n+1)
+    dp[1]=1
+    for i in xrange(2,n+1):
+        for j in xrange(1,i+1):
+            right,left=1,1
+            if j-1>0: left=dp[j-1]
+            if i-j>0: right=dp[i-j]
+            dp[i]+=left*right
+    return dp[n]
+
+===================================================================================================================
 
 #Print all nodes at distance k from a given node
 
+===================================================================================================================
 
-#given a binary tree how long will it take to burn the whole tree
-#if node on fire then max(l,r) else m+l
+def recoverFromPreorder(self, s):
+	root=TreeNode(s[0])
+    parents=defaultdict(list)
+    parents[0].append(root)
+    depth=0
+    for i in xrange(1,len(s)):
+	    if s[i] != '-':
+	        n=TreeNode(s[i])
+	        parent=parents[depth-1][len(parents[depth-1])-1]
+	        if parent.left is None: parent.left=n
+	        else: parent.right=n
+	        parents[depth].append(n)
+	        depth=0
+	    else:depth+=1
+   return root
 
+===================================================================================================================
 
-
-
-
-
-
+#Two Trees are isomorphic or not
+def is_isomorphic(n1,n2):
+	if n1 is None and n2 is None: return True
+	if n1 is None or n2 is None or n1.val != n2.val: return False
+	return (is_isomorphic(n1.left,n2.left) and is_isomorphic(n1.right,n2.right)) or (is_isomorphic(n1.left,n2.right) and is_isomorphic(n1.right,n2.left))
 
 
 

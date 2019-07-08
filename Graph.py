@@ -214,6 +214,7 @@ def dfs(x,y,visited,n,m):
 	dfs(x,y-1,visited,n,m)
 	dfs(x+1,y+1,visited,n,m)
 
+===================================================================================================================
 
 #minimize cash flow among a group of friends who owe each other money
 def get_max_credit(arr):
@@ -238,7 +239,6 @@ def min_cash_flow(amount):
 	print("Person " , max_debit , " pays " , minn, " to Person " , max_credit) 
 	min_cash_flow(amount)
 
-
 # graph[i][j] indicates the amount that person i needs to pay person j 
 graph = [ [0, 1000, 2000], 
           [0, 0, 5000], 
@@ -246,10 +246,11 @@ graph = [ [0, 1000, 2000],
 
 amount=[0 for _ in xrange(N)]
 for p in xrange(N):
-	for i in xrange(N):
-		amount[p]+=(graph[i][p]-graph[p][i])
+	for i in xrange(N): amount[p]+=(graph[i][p]-graph[p][i])
 
 min_cash_flow(amount)
+
+===================================================================================================================
 
 def bellman_ford():
 
@@ -258,30 +259,4 @@ def bellman_ford():
 
 #Minimum time required to rot all oranges. BFS
 
-#https://leetcode.com/problems/word-ladder/
-#word ladder
-def one_diff(self,w1,w2):
-  c=0
-  for i in xrange(len(w1)):
-  if w1[i:i+1]!=w2[i:i+1]: c+=1
-  if c==1:return True
-  else: return False
-        
-  def ladderLength(self, beginWord, endWord, wordList):
-  	if endWord not in wordList: return 0
-    result=1
-    q=[]
-    visited=[False]*len(wordList)
-    q.append(beginWord)
-    while q:
-      times=len(q)
-      result+=1
-      for i in xrange(len(q)):
-        w=q.pop(0)
-        for i in xrange(len(wordList)):
-          if visited[i]==False and one_diff(w,wordList[i]) and w!=wordList[i]:
-            if wordList[i]==endWord: return result
-              q.append(wordList[i])
-              visited[i]=True
-    return 0
 

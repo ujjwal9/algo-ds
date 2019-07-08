@@ -30,8 +30,15 @@ def rec(str,i,j):
 
 #longest palindromic subsequence
 dp = [0 for _ in xrange(n) for _ in xrange(n)]
-for k in xrange(n):
-	for i in xrange(n-k):
+for i in xrange(n): dp[i][i]=1
+for k in xrange(2,n+1):
+	for i in xrange(n-k+1):
 		j=i+k-1
         if str[i] == str[j]: L[i][j] = L[i+1][j-1] + 2
         else: L[i][j] = max(L[i][j-1], L[i+1][j])
+
+# min_palindromic_partitions(arr, i, j) = Min {min_palindromic_partitions(arr,i,k)
+#                                              min_palindromic_partitions(arr,k+1,j)+1}
+def min_palindromic_partitions_memoization(arr,i,j,map):
+    if i>j: return 0
+    

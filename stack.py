@@ -34,3 +34,17 @@ def stock_span(prices):
 #trapping rain water
 #largest rectangular area in a histogram
 
+#Celebrity problem. https://www.geeksforgeeks.org/the-celebrity-problem/
+def celebrity_problem(n):
+	stak=[]
+	for i in xrange(1, n+1): stak.append(i)
+	while len(stak)>1:
+		p1,p2=stak.pop(),stak.pop()
+		if(knows(p1,p2))stak.append(p2)
+		elif(!knows(p1,p2))stak.append(p1)
+
+#water drop problem. https://www.geeksforgeeks.org/water-drop-problem/. Same like stock span find local minima
+def f(length,position,speed):
+	drops=zip(position,speed)
+	sort(drops, lambda:x x[0])
+	#pop till the speed is lower than the last drop

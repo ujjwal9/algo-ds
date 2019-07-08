@@ -9,8 +9,11 @@ def largest_sum_contiguous_sub_array(arr):
 		max_so_far = max(max_so_far, curr_max)
 	return max_so_far
 
+=========================================================================================================
 #partition in 3 equal parts meaning each part should sum==sum(arr)/3. In a linear loop find it one by one 
 def three_partition_array_equal_sum(arr, i, sum_all=sum(arr)):
+
+#find a triplet in an array whose sum is closest to a given number
 
 #differnce in subset and partition
 #simple backtracking problem
@@ -29,6 +32,8 @@ def subarray_of_non_negative_no_with_given_sum(arr, N):
 		i+=1
 	return 0
 
+=========================================================================================================
+
 def segregate_0_1(arr):
 	start=0
 	end=len(arr)-1
@@ -37,31 +42,34 @@ def segregate_0_1(arr):
 		while arr[end]==1: end-=1
 		arr[start],arr[end]=arr[end],arr[start]
 
+#mid cant have 2 so no counter increament
 def segregate_0_1_2(arr):
-	zero=0
-	one=1
-	two=len(arr)-1
-	while zero<one and one<two:
-		while arr[zero]==0:zero+=1
-		while arr[one]==1: one+=1
-		while arr[two]==2: two-=1
-		if one<zero: one+=1
-		if zero<=one and one <= two:
-			if (arr[one]==0 and (arr[zero]==1 or arr[zero]==2)): arr[zero],arr[one]=arr[one],arr[zero]
-			if (arr[two]==0 and (arr[zero]==1 or arr[zero]==2)): arr[two],arr[zero]=arr[zero],arr[two]
-			if arr[two]==1 and arr[one]==2: arr[one],arr[two]=arr[two],arr[one]	
-	print arr
-segregate_0_1_2([0,0,1,2,2,0,1])
+	lo=0
+	mid=0
+	hi=len(arr)-1
+	while mid<=hi:
+		if arr[mid]==0:
+			arr[lo],arr[mid]=arr[mid],arr[lo]
+			lo+=1
+			mid+=1
+		elif arr[mid]==1: mid+=1
+		else:
+			arr[mid],arr[hi]=arr[hi],arr[mid]
+			hi-=1
+			mid+=1
+segregate_0_1_2([2,0,1,0,1,2,2,0,1,0])
+
+=========================================================================================================
 
 #trapping rain water. Keep an array of larger building on the left side and an array of larger building on 
 #the right side and then get the difference in indices
 def trapping_rain_water(arr, l=len(arr)):
 	if l<=2: return 0
 	left_max,right_max,result=[0]*l,[0]*l,0
+	left_max[0],right_max[0]=arr[0],arr[l-1]
 	for i in xrange(1,l): left_max[i]=max(left_max[i-1],arr[i])
 	for i in xrange(l-2,-1,-1): right_max[i]=max(right_max[i+1],arr[i])
 	for i in xrange(1,l-2): result+=min(left_max[i],right_max[i])-arr[i]
-
 
 #largest rectangular area in a histogram. Same as trapping rain water. Like NGE problem use a stack to find 
 #the nearest smaller right, left bar for bar then get the difference in indices
@@ -87,7 +95,9 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 	right_min=next_smaller_element_right(arr)
 	for i in xrange(0,l):result=max(result,(right_min[i]-left_min[i]-1)*arr[i])
 
-#Transform One String to Another using Minimum Number of Given Operation
+=========================================================================================================
+
+#Transform One String to Another using Minimum Number of Given Operation. BFS
 
 
 #find k closest element to a given value
@@ -102,11 +112,11 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 
 #Same can be used to get a triplet of a particular sum
 
-#Shuffle a given array using Fisher–Yates shuffle Algorithm
+#Shuffle a given array using Fisher Yates shuffle Algorithm
 
 #Stock Buy Sell to Maximize Profit
 #find the local minima and local maxima and substract it and do for remaining array
-def f(price):
+def stock_buy_sell(price):
 	if len(price)<2: return
 	buy,sell=[],[]
 	i=0
@@ -118,5 +128,10 @@ def f(price):
 		sell.append(i-1)
 
 
+def find_first_non_repeating_character_in_a_string():
+	#use LinkedHashMap
+
+
+#anagrams
 
 

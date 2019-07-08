@@ -20,7 +20,31 @@ def insert(node, new_node):
 		if node.left==None and node.right==None:node.left=new_node
 		else:self.insert(node.left, new_node)
 
-#bst two nodes are swapped. Inorder traversal gives the correct order of the elements
+#delete a node 
+def delete(node, v):
+  if node is None: return None
+  if node.left in None and node.right is None and node.val==v: return None
+  if node.left is None and node.right is not None and node.val==v: return node.right
+  if node.right is None and node.left is not None and node.val==v: return node.left
+  if node.right is not None and node.left is not None and node.val==v:
+    new_node=smallest_node_in_right_side_tree(node.right)
+    new_node.left=node.left
+    new_node.right=node.right
+    return new_node
+  node.left=delete(node.left,v)
+  node.right=delete(node.right,v)
+  return node
+
+#is bst. Inorder traversal should be sorted
+def isBst(node):
+  global prev,result
+  if node.left: isBst(node.left)
+  if prev and prev.val>=node.val: result=False
+  else: result=result and True
+  prev=node
+  if node.right: isBst(node.right)
+
+#bst two nodes are swapped recover bst. Inorder traversal gives the correct order of the elements
 def swapped(node):
 	global prev,p1,p2
   if node.left: swapped(node.left)
@@ -32,28 +56,7 @@ def swapped(node):
   prev = node
   if node.right: swapped(node.right)
 
-#unique bst from of an arrary from 1..n
- def numTrees(self, n):
-    dp=[0]*(n+1)
-    dp[1]=1
-    for i in xrange(2,n+1):
-        for j in xrange(1,i+1):
-            right,left=1,1
-            if j-1>0: left=dp[j-1]
-            if i-j>0: right=dp[i-j]
-            dp[i]+=left*right
-    return dp[n]
-
-#is bst. Inorder traversal should be sorted
-def isBst(node):
-	global prev,result
-  if node.left: isBst(node.left)
-  if prev and prev.val>=node.val: result=False
-  else: result=result and True
-  prev=node
-  if node.right: isBst(node.right)
-
 #check if a triplet with given sum exists
 
-
-  
+#Given 2 BST find an element from both such that their sum is N
+#Do inorder traversal of the two bst get the array and then using two pointer find the sum  
