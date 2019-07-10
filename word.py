@@ -1,25 +1,15 @@
 #word problems usually use trie based data structure
 #word break problem
-public boolean wordBreak(String s, Set<String> wordDict) {
-    int[] pos = new int[s.length()+1];
- 
-    Arrays.fill(pos, -1);
- 
-    pos[0]=0;
- 
-    for(int i=0; i<s.length(); i++){
-        if(pos[i]!=-1){
-            for(int j=i+1; j<=s.length(); j++){
-                String sub = s.substring(i, j);
-                if(wordDict.contains(sub)){
-                    pos[j]=i;
-                }
-            } 
-        }
-    }
- 
-    return pos[s.length()]!=-1;
-}
+def word_break(s, word_dict):
+    n=len(word_dict)
+    pos=[-1]*(n+1)
+    pos[0]=0
+    for i in xrange(n):
+        if pos[i]!=-1:
+            for j in xrange(i+1, n):
+                if word_dict[s[i:j]] is not None:
+                    pos[j]=i
+    return pos[n]!=-1
 
 #word wrap
 def word_wrap(arr, dp, N, i):

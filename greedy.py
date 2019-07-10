@@ -5,9 +5,10 @@ def activity_selection(start, end):
 	t=zip(start, end)
 	sort=sorted(t, key=lambda x:x[1])
 	result=1
-	j=1
+	prev=arr[0]
 	for i in xrange(1, len(sort)):
-		if sort[i][0]>=sort[j][1]:
+		curr=arr[i]
+		if curr[0]>=prev[1]:
 			result+=1
-			j=i
+			prev=curr
 	print result

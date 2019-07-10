@@ -26,11 +26,10 @@ def largest_sum_rectangle_2d_matrix(arr):
 
 #maximum size square sub matrix with all 1s. Dynamic programming
 def f():
-	for i in xrange(len(arr)):
-    dp[i][0], dp[0][i]=arr[i][0],arr[0][i]
+	for i in xrange(len(arr)): dp[i][0], dp[0][i]=arr[i][0],arr[0][i]
 	for i in xrange(1,len(arr)):
 	    for j in xrange(1,len(arr)):
-	        if arr[i-1][j]==1: dp[i][j]=min(arr[i][j-1],arr[i][j]==1,arr[i-1][j-1])
+	        if arr[i][j]==1: dp[i][j]=min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1])
 	        else: dp[i][j]=0
 	
 ================================================================================================================================

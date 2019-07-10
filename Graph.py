@@ -3,6 +3,7 @@
 #To avoid processing a node more than once, we use a boolean visited array.
 from collections import defaultdict
 import sys
+import heapq
 
 #DFS connnected graph O(V+E)
 #graph can be either be represented as a matrix, as a map or a node with children
@@ -51,7 +52,7 @@ class Graph:
 		visited[node]=True
 		for adj in graph[node]:
 			if visited[adj] and adj!=parent: print "Cyclic"
-			return check_cycle_undirected_graph(adj, node, parent)
+			return check_cycle_undirected_graph(adj, node)
 
 	def check_cycle_DAG(self, node, parents):
 		self.visited[node]=True
@@ -191,15 +192,31 @@ def prims(root):
 	node_queue=[]
 	heapq.heappush(node_queue, (root.min_distance, root))
 	while node_queue:
-		popped=heapq.heappop()
+		popped=heapq.heappop(node_queue)
 		reached_nodes.append(popped)
 		for edge in popped.adjacencies:
 			node=edge.target
 			if node not in reached_nodes and node.min_distance>edge.weight:
 				node.min_distance=e.weight
-			heap.heappush(node)
+			node_queue.append(node)
 			heapq.heapify(node_queue)
 
+def dijkstra(root):
+	root.min_distance=0
+	reached_nodes=[]
+	node_queue=[]
+	heapq.heappush(node_queue, (root.min_distance, root))
+	while node_queue:
+		popped=heapq.heappop(node_queue)
+		reached_nodes.append(popped)
+		for e in popped.adjacencies:
+			node=e.target
+			new_distance=e.weight+popped.min_distance
+			if node not in reached_nodes and node.min_distance>new_distance:
+				node.min_distance=new_distance
+			node_queue.append(node)
+			heapq.heapify(node_queue)
+			
 #kruskal algorithm
 
 #Flood fill algorithm O(nxm)

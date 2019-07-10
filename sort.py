@@ -18,7 +18,7 @@ def merge(arr,start,end):
 	r=[arr[i] for i in xrange((start+end)/2),end]
 	i=j=0
 	k=start
-	while i!=0 or j!=0:
+	while i<len(l) and j<len(r):
 		if l[i]<r[j]:
 			arr[k]=l[i]
 			i+=1
@@ -27,12 +27,12 @@ def merge(arr,start,end):
 			j+=1
 		k+=1
 
-	while i<len(l)-1:
+	while i<len(l):
 		arr[k]=l[i]
 		k+=1
 		i+=1
 
-	while j<len(r)-1:
+	while j<len(r):
 		arr[k]=r[j]
 		k+=1
 		i+=1

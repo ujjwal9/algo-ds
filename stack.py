@@ -10,6 +10,8 @@ def next_larger_element(arr):
 #queue using 2 stacks
 #making dequeue expensive
 
+#queue using 1 stack
+
 
 
 #stack using 2 queues

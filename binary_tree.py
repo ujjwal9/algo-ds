@@ -166,7 +166,7 @@ def left_view(node):
 def lca(root, p, q):
 	if root is None: return None
     left,right=lca(root.left,p,q),lca(root.right,p,q)
-    if (right and left) or (right and (root.val==p.val or root.val==q.val)) or (left and (root.val==p.val or root.val==q.val)): return root
+    if (right and left) or ((left or right) and node.val==p or node.val==q): return root
     if root.val==p.val or root.val==q.val: return root
     return right or left
 
