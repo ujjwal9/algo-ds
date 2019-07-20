@@ -78,6 +78,14 @@ def f(matrix):
 ================================================================================================================================
 
 #search an element in a row wise and column wise sorted matrix
+def f(matrix, num):
+	i,j=0,len(matrix[0])-1
+	while i<len(matrix) and j>0:
+		if matrix[i][j]==num: return(i,j)
+		if matrix[i][j]<num:j-=1
+		if matrix[i][j]>num:i+=1
+	return (-1,-1)
+	
 #start with the last element in the first row
 def f(matrix):
 

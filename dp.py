@@ -34,7 +34,7 @@ def edit_distance(w1,w2):
 			if i==0: dp[i][j]=m
 			elif j==0: dp[i][j]=n
 			elif w1[n-1]==w2[m-1]: dp[i][j]=dp[i-1][j-1]
-			else dp[i][j]=1+min(dp[i][j-1] #replace
+			else dp[i][j]=1+min(dp[i][j-1] #delete
 								dp[i-1][j] #insert
 								dp[i-1][j-1] #replace
 				)
@@ -126,7 +126,7 @@ def egg_drop(eggs, floor):
 	if eggs==1: return floor
 	m=sys.maxint
 	for f in xrange(1, floor+1):
-		m = min(max(egg_drop(eggs-1, f-1), egg_drop(eggs, floor-f)), m)
+		m = min(m,max(egg_drop(eggs-1, f-1), egg_drop(eggs, floor-f)))
 	return m+1
 
 def egg_drop_dp(eggs, floors):
@@ -140,6 +140,25 @@ def egg_drop_dp(eggs, floors):
 				dp[i][j] = min(dp[i][j], 1+max(dp[i-1][x-1],dp[i][j-x]))
 	return dp[n][k]
 
+#Painters partition problem
+def partition(arr,n,k):
+	if k==1: return sum(arr[0:n])
+	if n==1: return arr[0]
+	best=1000000000
+	for i in xrange(1,n+1):
+		best=min(best,max(partition(arr,i,k-1),sum(arr,i,n-1)))
+	return best
+
+def painters_partition_dp(arr,n,k):
+	dp=[[0 for _ in xrange(n+1)] for _ in xrange(n+1)]
+	for i in xrange(1,k+1): dp[i][1]=arr[0]
+	for i in xrange(1,n+1): dp[1][i]=sum(arr[0:i])
+	for i in xrange(2,k+1):
+		for j in xrange(2, n+1):
+			best=1000000000
+			for p in xrange(1,j+1):
+				best=min(best,max(dp[i-1][p],sum(arr,p,j-1)))
+				
 #go through a loop for all the cases
 def cut_rod(price, n):
 	if n<=0: return 0
@@ -222,7 +241,16 @@ def min_sum_partition(arr):
 	subset_sum(arr, sum(arr))
 	#for sum/2 find nearest True
 
-#Partition problem
-def 
 
 ===========================================================================================================================
+#wildcard matching 
+def wildcard(string, pattern, n, m):
+	dp=[[False for _ in xrange(n+1)] for _ in xrange(m+1)]
+	dp[0][0]=True
+	for i in xrange(1, m):
+		if pattern[i-1]=='*': dp[0][j]=dp[0][j-1]
+	for i in xrange(1,n+1):
+		for j in xrange(1,m+1):
+			if pattern[j-1]=='?' or pattern[j-1]==string[i-1]:dp[i][j]=dp[i-1][j-1]
+			else if pattern[j-1]=='*': dp[i][j]=dp[i][j-1] or dp[i-1][j]
+

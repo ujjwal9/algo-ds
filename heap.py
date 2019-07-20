@@ -4,18 +4,17 @@
 #Extract max k times O(klogn+n)
 #https://www.geeksforgeeks.org/heap-data-structure/
 
-
+#max heap
 def heapify(arr, n, i):
 	largest=i
 	if 2*i+1<n and arr[i]<arr[2*i+1]: largest=2*i+1
-	if 2*i+2<n and arr[i]<arr[2*i+2]: largest=2*i+2
+	if 2*i+2<n and arr[largest]<arr[2*i+2]: largest=2*i+2
 	if largest!=i:
 		arr[i],arr[largest]=arr[largest],arr[i]
 		heapify(arr,n,largest)
 
 def heapsort(arr):
 	n=len(arr)
-
 	for i in xrange(n/2-1, -1, -1):
 		heapify(arr, n, i)
 

@@ -60,3 +60,28 @@ def swapped(node):
 
 #Given 2 BST find an element from both such that their sum is N
 #Do inorder traversal of the two bst get the array and then using two pointer find the sum  
+
+
+#Convert Sorted Array to Binary Search Tree
+def divide(arr, s=0, e=len(arr)):
+  global root
+  if s<e:
+    mid=(s+e)/2
+    bst(root,TreeNode(arr[mid]))
+    divide(arr,s,mid)
+    divide(arr,mid+1,e)
+        
+def bst(parent, node):
+  global roote
+  if root is None:
+    root=node
+    return
+  if node.val<parent.val:
+    if parent.left is None: parent.left=node
+    else: bst(parent.left, node)
+  else: 
+    if parent.right is None: parent.right=node
+  else: bst(parent.right, node)
+
+
+        

@@ -161,6 +161,20 @@ def left_view(node):
 			if node.left: queue.append(node.left)
 			if node.right: queue.append(node.right)
 
+#Populating Next Right Pointers in Each Node
+def connect(self, root):
+	queue=[]
+	queue.append(root)
+	while queue:
+		l=len(queue)
+        stak=[]
+		for i in xrange(l):
+			popped=queue.pop(0)
+			stak.append(popped)
+			if popped.left: queue.append(popped.left)
+			if popped.right: queue.append(popped.right)
+			for i in xrange(len(stak)-1):stak[i].next=stak[i+1]
+
 ===================================================================================================================
 
 def lca(root, p, q):
@@ -243,14 +257,18 @@ def print_nodes_bt_as_they_become_leaf_node(node,map=defaultdict(list)):
 	map[order].append(node.val)
 	return order
 
-#given a binary tree how long will it take to burn the whole tree
-#if node on fire then max(l,r) else m+l
 ===================================================================================================================
 
 #check if a binary tree is a subset of another binary tree for every node check if the subtree are equal
 def is_subset_tree(node, subset_node, subset_root):
 	
 ===================================================================================================================
+#construct a binary tree from inorder and preorder traversal
+#first element of preorder is root. Find the elements in the inorder as the sequence in preorder and construct the tree
+
+#construct a binary tree from inorder and postorder traversal
+
+
 
 #construct a binary tree from given array in level order fashion
 def construct_complete_binary_tree(arr):
@@ -288,9 +306,6 @@ def numTrees(self, n):
             dp[i]+=left*right
     return dp[n]
 
-===================================================================================================================
-
-#Print all nodes at distance k from a given node
 
 ===================================================================================================================
 
@@ -318,6 +333,52 @@ def is_isomorphic(n1,n2):
 	if n1 is None or n2 is None or n1.val != n2.val: return False
 	return (is_isomorphic(n1.left,n2.left) and is_isomorphic(n1.right,n2.right)) or (is_isomorphic(n1.left,n2.right) and is_isomorphic(n1.right,n2.left))
 
+===================================================================================================================
 
+#Print all nodes at distance k from a given node
+#Given a binary tree, a destination node and an integer value given_depth return a list of nodes at a distance of given_depth
+def find_parent(node):
+	if node is None: return
+	if node.left:
+		parent[node.left]=node
+		find_parent(node.left)
+	if node.right:
+		parent[node.right]=node
+		find_parent(node.right)=node
+
+def dfs(target, k):
+	if target==null or visited[target]==True or k<0: return
+	visited[target]=True
+	if k==0: result.append(target)
+	dfs(target.left,k-1)
+	dfs(target.right,k-1)
+	dfs(parent[target], k-1)
+
+parent={}
+result=[]
+visited={}
+
+
+#given a binary tree how long will it take to burn the whole tree
+def find_parent(node):
+	if node is None: return
+	if node.left:
+		parent[node.left]=node
+		find_parent(node.left)
+	if node.right:
+		parent[node.right]=node
+		find_parent(node.right)=node
+
+def dfs(target, k):
+	if target==null or visited[target]==True: return
+	visited[target]=True
+	result=max(result,k)
+	dfs(target.left,k+1)
+	dfs(target.right,k+1)
+	dfs(parent[target], k+1)
+
+parent={}
+result=-1
+visited={}
 
 

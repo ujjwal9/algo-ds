@@ -1,7 +1,6 @@
 #word problems usually use trie based data structure
 #word break problem
-def word_break(s, word_dict):
-    n=len(word_dict)
+def word_break(s, word_dict,n=len(s)):
     pos=[-1]*(n+1)
     pos[0]=0
     for i in xrange(n):
@@ -11,7 +10,8 @@ def word_break(s, word_dict):
                     pos[j]=i
     return pos[n]!=-1
 
-#word wrap
+#word wrap. Given a sequence of words, and a limit on the number of characters that can be put in 
+#one line (line width). Put line breaks in the given sequence such that the lines are printed neatly.
 def word_wrap(arr, dp, N, i):
     if i > len(arr): return 0
     minn=0
@@ -26,7 +26,7 @@ word_wrap(arr,dp,N,0)
 
 
 #https://leetcode.com/problems/word-ladder/
-#word ladder
+#Transform One String to Another using Minimum Number of Given Operation. BFS
 def one_diff(self,w1,w2):
   c=0
   for i in xrange(len(w1)):

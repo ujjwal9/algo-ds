@@ -276,4 +276,15 @@ def bellman_ford():
 
 #Minimum time required to rot all oranges. BFS
 
+===================================================================================================================
+
+#clone an undirected graph
+def f(node,n_node,mapp):
+    mapp[n_node.val]=n_node
+    for n in node.neighbors:
+        new_node=mapp.get(n.val, Node(n.val,[]))
+        n_node.neighbors.append(new_node)
+        if new_node.val not in mapp: f(n,new_node,mapp)	
+
+f(node,Node(node.val,[]),{})
 

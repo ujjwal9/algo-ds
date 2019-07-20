@@ -2,18 +2,56 @@ from sys import maxint
 
 # kadane's algorithm
 def largest_sum_contiguous_sub_array(arr):
-	max_so_far=arr[0]
-	curr_max=arr[0]
+	max_so_far,curr_max=arr[0],arr[0]
 	for a in arr[1:]:
 		curr_max = max(a, curr_max+a)
 		max_so_far = max(max_so_far, curr_max)
 	return max_so_far
 
+def pascal( row):
+	p = [[1 for _ in xrange(i+1)] for i in xrange(row+1)]
+	for i in xrange(2,row+1):
+		for j in xrange(1,i):
+			p[i][j]=p[i-1][j-1]+p[i-1][j]
+
+=========================================================================================================
+#2 sum. use hashmap and check if the numbers are not same
+
+#3 sum. Store pair wise value and check if the no are not same
+
+#4 sum. Store 2 pair wise value and check if in both pair the indexes are not same
+
+#find a triplet in an array whose sum is closest to a given number
+
+#Find one triplet such that indexes are in increasing order so as values at index.
+#i<j<k and a[i]<a[j]<a[k]. Find a triplet like this in linear time
+def find_smaller_j(arr):
+	arr_i=[-1]*len(arr)
+	minn=0
+	for i in xrange(1,len(arr)):
+		if arr[i-1]<arr[minn]:minn=i-1
+		if arr[minn]<arr[i]: arr_i[i]=minn
+	result arr_i
+
+def find_bigger_j(arr):
+	arr_k=[-1]*len(arr)
+	maxx=1
+	for i in xrange(len(arr)-2,-1,-1):
+		if arr[i+1]>arr[maxx]:maxx=i+1
+		if arr[maxx]>arr[i]: arr_k[i]=maxx
+	return arr_k
+
+def f(arr):
+	result=None
+	arr_i=find_smaller_j(arr)
+	arr_k=find_bigger_j(arr)
+	for j in xrange(2,len(arr)-1):
+		if arr_i[j]!=-1 and arr_k[j]!=-1: result=(arr(arr_i[j]),arr[j],arr_k[j])
+
 =========================================================================================================
 #partition in 3 equal parts meaning each part should sum==sum(arr)/3. In a linear loop find it one by one 
 def three_partition_array_equal_sum(arr, i, sum_all=sum(arr)):
 
-#find a triplet in an array whose sum is closest to a given number
 
 #differnce in subset and partition
 #simple backtracking problem
@@ -44,9 +82,7 @@ def segregate_0_1(arr):
 
 #mid cant have 2 so no counter increament
 def segregate_0_1_2(arr):
-	lo=0
-	mid=0
-	hi=len(arr)-1
+	lo,mid,hi=0,0,len(arr)-1
 	while mid<=hi:
 		if arr[mid]==0:
 			arr[lo],arr[mid]=arr[mid],arr[lo]
@@ -96,20 +132,13 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 
 =========================================================================================================
 
-#Transform One String to Another using Minimum Number of Given Operation. BFS
-
 
 #find k closest element to a given value
 #sort the array then find the element using binary search and then move its right and left to get the closest element
 
 #Find the smallest window in a string containing all characters of another string
 #https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
-
-
-#Given an array A[] and a number x, check for pair in A[] with sum as x
-#sort the array and then 
-
-#Same can be used to get a triplet of a particular sum
+#two pointers problem
 
 #Shuffle a given array using Fisher Yates shuffle Algorithm
 
@@ -132,5 +161,10 @@ def find_first_non_repeating_character_in_a_string():
 
 
 #anagrams
+
+#next greater element.find the first element arr[i-1]<arr[i] then swap it with the lowest element
+#greater than arr[i-1] and then sort the arr[i:]
+
+def f()
 
 

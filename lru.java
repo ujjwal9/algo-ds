@@ -53,21 +53,13 @@ public class LRUCache{
 	}
 
 	public void removeNode(Entry node){
-		if (node.left != null){
-			node.left.right = node.right;
-		}
-		else{
-			start = node.right;
-		}
-		if(node.right != null){
-			node.right.left = node.left;
-		}
-		else{
-			end = node.left;
-		}
+		if (node.left != null) node.left.right = node.right;
+		else start = node.right;
+		if(node.right != null) node.right.left = node.left;
+		else end = node.left;
 	}
 
-	public addAtTop(Entry node){
+	public void addAtTop(Entry node){
 		node.right = start;
 		node.left = null;
 		if (start != null ) start.left = node;

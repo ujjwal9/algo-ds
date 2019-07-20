@@ -50,3 +50,27 @@ def f(length,position,speed):
 	drops=zip(position,speed)
 	sort(drops, lambda:x x[0])
 	#pop till the speed is lower than the last drop
+
+#check for balanced paranthesis
+
+
+
+
+#Design a stack such that it provides push(), pop() and min( ) is in O(1)Use only Stack not any other Data structure
+class New_stack(object):
+	def __init__(self):
+		self.stak = []
+		self.minn = []
+
+	def append(val):
+		self.stak.append(val)
+		if minn[len(minn)-1]>val: minn.append(val)
+		else: minn.append(minn[len(minn-1)])
+
+	def popped():
+		self.minn.pop()
+		return self.stak.pop()
+
+	def getMin():
+		return self.minn[len(minn)-1]
+		
