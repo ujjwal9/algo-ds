@@ -18,6 +18,9 @@ def lis_dp(arr):
 			if arr[j]<arr[i] and lis[i]<lis[j]+1 : 
 				lis[i]=lis[j]+1
 
+#russian doll
+#do a sort by width,height increasing and then do LIS
+
 def lcs_dp(a1, a2):
 	l = [[0]*(len(a1)+1) for i in xrange(len(a2)+1)]
 	for i in xrange(len(a1)+1):
@@ -158,7 +161,7 @@ def painters_partition_dp(arr,n,k):
 			best=1000000000
 			for p in xrange(1,j+1):
 				best=min(best,max(dp[i-1][p],sum(arr,p,j-1)))
-				
+
 #go through a loop for all the cases
 def cut_rod(price, n):
 	if n<=0: return 0
@@ -253,4 +256,22 @@ def wildcard(string, pattern, n, m):
 		for j in xrange(1,m+1):
 			if pattern[j-1]=='?' or pattern[j-1]==string[i-1]:dp[i][j]=dp[i-1][j-1]
 			else if pattern[j-1]=='*': dp[i][j]=dp[i][j-1] or dp[i-1][j]
+
+===========================================================================================================================
+#balloon burst
+def max_coins(arr):
+	if len(arr)==1: return arr[0]
+	maxx=0
+	for i in xrange(arr):
+		s = 1 if i==0 else arr[i-1]
+		e = 1 if i==len(arr)-1 else arr[i+1]
+		maxx=max(max, max_coins(arr.remove(i) + s*arr[i]*e))
+	return maxx
+
+===========================================================================================================================
+#jump game 
+
+
+#jump game II
+
 

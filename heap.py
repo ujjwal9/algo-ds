@@ -3,6 +3,9 @@
 #Build a max heap tree O(n)
 #Extract max k times O(klogn+n)
 #https://www.geeksforgeeks.org/heap-data-structure/
+#heap.heapify() for min heap and heap._heapify_max() for max heap
+
+from heapq import heappush, heappop
 
 #max heap
 def heapify(arr, n, i):
@@ -38,9 +41,23 @@ def k_sorted_array(arr,k):
 		arr[index]=heappop(heap)
 		index+=1
 
+
 #median in a stream of integers
-#heap.heapify() for min heap and heap._heapify_max() for max heap
 
 
 #kth largest or smallest element in heap
+
+#merge k sorted arrays
+def f(arr, k):
+	h=[]
+	for i in xrange(arr): heappush(heap,(arr[i][0],(i,0)))
+	while h:
+		i,j=heappop(h)
+		if j<len(arr[i]): heappush(heap,(arr[i][j+1],(i,j+1)))
+	
+
+
+
+
+
 

@@ -51,8 +51,9 @@ class Graph:
 	def check_cycle_undirected_graph(self, node, parent):
 		visited[node]=True
 		for adj in graph[node]:
-			if visited[adj] and adj!=parent: print "Cyclic"
-			return check_cycle_undirected_graph(adj, node)
+			if visited[adj] and adj!=parent: return True
+			if check_cycle_undirected_graph(adj, node): return True
+		return False
 
 	def check_cycle_DAG(self, node, parents):
 		self.visited[node]=True
@@ -88,17 +89,7 @@ class Graph:
 					else if color[v] == color[u]: return False
 		return True	
 
-g = Graph(4)
-g.addEdge(0, 1) 
-g.addEdge(0, 2) 
-g.addEdge(1, 2) 
-g.addEdge(2, 0) 
-g.addEdge(2, 3) 
-g.addEdge(3, 3) 
-g.DFS(2)
-g.visited = [False]*4
-g.BFS(2)
-
+===================================================================================================================
 #SPT(Shortest path tree)
 #Dijskstras Greedy approach
 # 1) One source and One Destination-
@@ -112,43 +103,6 @@ g.BFS(2)
 # 3) Between every pair of nodes-
 # → Floyd-Warshall
 #dijkstras and prims are almost same only in dijkstras sum of distance is taken
-class adj_matrix_graph():
-	def __init__(self, vertices):
-		self.V=vertices
-		self.graph=[[0 for column in xrange(vertices)] for row in xrange(vertices)]
-
-	def min_distance(self, dist, spt_set):
-		min=sys.maxint
-		for v in xrange(self.V):
-			if dist[v]<min and spt_set[v]==False:
-				min=dist[v]
-				min_index=v
-		return min_index
-
-
-	def dijkstra(self, src):
-		dist=[(sys.maxint)]*self.V
-		dist[src]=0
-		spt_set=[False]*self.V
-		for _ in xrange(self.V):
-			u=self.min_distance(dist, spt_set)
-			spt_set[u]=True
-			for v in xrange(self.V):
-				if self.graph[u][v]>0 and spt_set[v]==False and dist[v]>dist[u]+self.graph[u][v]:
-					dist[v]=dist[u]+self.graph[u][v]
-
-g = adj_matrix_graph(9)
-g.graph = [[0, 4, 0, 0, 0, 0, 0, 8, 0], 
-           [4, 0, 8, 0, 0, 0, 0, 11, 0], 
-           [0, 8, 0, 7, 0, 4, 0, 0, 2], 
-           [0, 0, 7, 0, 9, 14, 0, 0, 0], 
-           [0, 0, 0, 9, 0, 10, 0, 0, 0], 
-           [0, 0, 4, 14, 10, 0, 2, 0, 0], 
-           [0, 0, 0, 0, 0, 2, 0, 1, 6], 
-           [8, 11, 0, 0, 0, 0, 1, 0, 7], 
-           [0, 0, 2, 0, 0, 0, 6, 7, 0] 
-          ]
-
 
 #Floyd Warshall O(v^3)
 INF=9999999
@@ -165,11 +119,6 @@ graph = [[0,5,INF,10],
          [INF,0,3,INF], 
          [INF, INF, 0,   1], 
          [INF, INF, INF, 0]]
-
-
-#Word boggle
-#consider every character as a starting character and find all possible words using DFS
-		
 
 #minimum spanning tree
 #Given an undirected and connected graph , a spanning tree of the graph  is a tree that spans 
@@ -217,8 +166,11 @@ def dijkstra(root):
 			node_queue.append(node)
 			heapq.heapify(node_queue)
 			
-#kruskal algorithm
+def kruskal():
 
+def bellman_ford():
+
+===================================================================================================================
 #Flood fill algorithm O(nxm)
 def dfs(x,y,visited,n,m):
 	if (x<0 or x>n or y<0 or y>n or visited[x][m]): return
@@ -232,7 +184,6 @@ def dfs(x,y,visited,n,m):
 	dfs(x+1,y+1,visited,n,m)
 
 ===================================================================================================================
-
 #minimize cash flow among a group of friends who owe each other money
 def get_max_credit(arr):
 	result=0
@@ -269,12 +220,9 @@ min_cash_flow(amount)
 
 ===================================================================================================================
 
-def bellman_ford():
-
 
 #minimum steps to reach target by a knight. BFS
 
-#Minimum time required to rot all oranges. BFS
 
 ===================================================================================================================
 

@@ -1,34 +1,34 @@
 #binary search
 def binary_search(arr,l,h,n):
-	if h>=l:
-		mid=(l+h)/2
-		if mid==n: return mid
-		binary_search(arr,l,mid-1,n) if n<arr[mid] else binary_search(arr,mid+1,h,n)
-	return -1
+	if h>l: return -1
+	mid=(l+h)/2
+	if mid==n: return mid
+	return binary_search(arr,l,mid-1,n) if n<arr[mid] else binary_search(arr,mid+1,h,n)
+
+#Find first and last positions of an element in a sorted array
+def first(arr,l,h,n):
+	if l>h: return -1
+	mid=(l+h)/2
+	if arr[mid]==n and (mid==0 or arr[mid-1]<n): return mid
+	else first(arr,l,mid-1,h,n) if n<=arr[mid] else first(arr,mid+1,h,n)
+
+def last(arr,l,h,n):
+	if l>h: return -1
+	mid=(l+h)/2
+	if arr[mid]==n and (mid==len(arr)-1 or arr[mid+1]>n): return mid
+	else first(arr,mid+1,h,n) if n>=arr[mid] else first(arr,l,mid+1,n)
 
 #Given a sorted and rotated array find a given element using binary search approach. If there are duplicates given then it will take O(n)
 def f(arr,l,h,key):
 	if l>h: return -1
+	mid=(l+h)/2
 	if arr[mid]==key: return mid
 	if arr[l]<=arr[mid]:
-		if key>=arr[l] and key<=arr[mid]: f(arr,l,mid-1,key)
+		if key>=arr[l] and key<arr[mid]: f(arr,l,mid-1,key)
 		else: f(arr,mid+1,h,key)
 	else:
-		if key>=arr[mid] and key<=arr[h]: f(arr,mid+1,h,key)
+		if key>arr[mid] and key<=arr[h]: f(arr,mid+1,h,key)
 		else: f(arr,l,mid-1,key)
-
-#Find first and last positions of an element in a sorted array
-def first(arr,l,h,n):
-	if l<h:
-		mid=(l+h)/2
-		if arr[mid]==n and (mid==0 or arr[mid-1]<n): print mid
-		else first(arr,mid+1,h,n) if arr[mid]<=n else first(arr,l,mid+1,n)
-
-def last(arr,l,h,n):
-	if l<h:
-		mid=(l+h)/2
-		if arr[mid]==n and (mid==len(arr)-1 or arr[mid+1]>n): print mid
-		else first(arr,mid+1,h,n) if arr[mid]<=n else first(arr,l,mid+1,n)
 
 #Given a rotated sorted array get the original array
 def rverseArray(arr, start, end): 

@@ -72,7 +72,7 @@ def divide(arr, s=0, e=len(arr)):
     divide(arr,mid+1,e)
         
 def bst(parent, node):
-  global roote
+  global root
   if root is None:
     root=node
     return

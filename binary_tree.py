@@ -10,9 +10,8 @@ def height(node):
 	return max(height(node.left), height(node.right))+1
 
 def depth(node,d=0):
-	if node==None: return
-	depth(node.left,d+1)
-	depth(node.right,d+1)
+	if node==None: return d
+	return max(depth(node.left,d+1), depth(node.right,d+1))+1
 
 #diameter or the width of a tree is the number of nodes on the longest path between two end nodes
 def diameter(node):
@@ -126,7 +125,7 @@ def inorder_without_recursion(root):
 			node=node.left
 		else:
 			node=stack.pop()
-			if node: print node.val
+			print node.val
 			node=node.right
 
 ===================================================================================================================
@@ -221,8 +220,7 @@ def invert(node):
 
 ===================================================================================================================
 
-#flatten binary tree to single linked list
-	
+#flatten binary tree to single linked list	
 def bt_sll(node):
 	if node==None: return
 	left=bt_sll(node.left)
@@ -308,7 +306,7 @@ def numTrees(self, n):
 
 
 ===================================================================================================================
-
+#https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/
 def recoverFromPreorder(self, s):
 	root=TreeNode(s[0])
     parents=defaultdict(list)
@@ -380,5 +378,54 @@ def dfs(target, k):
 parent={}
 result=-1
 visited={}
+
+===================================================================================================================
+#serialize and deserialize a bianry tree
+#storing preorder with -1 as null representation
+def serialize(node):
+	if node is None:
+		print -1
+		return
+	print node.val
+	f(node.left)
+	f(node.right)
+
+def deserialize():
+	global i, arr, root
+	if i>=len(arr): return
+	if arr[i]!=-1:
+		node=Node(arr[i])
+		i+=1
+		node.left=deserialize()
+		i+=1
+		node.right=deserialize()
+		return node
+#[8 4 -1 -1 12 10 -1 -1 14 -1 -1 -1]
+===================================================================================================================
+class Solution(object):
+    def rangeSumBST(self, root, L, R):
+        def dfs(node):
+            if node:
+                if L <= node.val <= R:
+                    self.ans += node.val
+                if L < node.val:
+                    dfs(node.left)
+                if node.val < R:
+                    dfs(node.right)
+
+        self.ans = 0
+        dfs(root)
+        return self.ans
+
+===================================================================================================================
+#Merge Two Binary Trees
+def mergeTrees(t1, t2):
+	if t1 is None and t2 is None: return
+    if t1 is None: return t2
+    if t2 is None: return t1
+    t1.val=t1.val+t2.val
+    t1.left,t1.right=mergeTrees(t1.left,t2.left),mergeTrees(t1.right,t2.right)
+    return t1
+
 
 

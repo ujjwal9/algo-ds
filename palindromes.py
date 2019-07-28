@@ -39,5 +39,14 @@ for k in xrange(2,n+1):
         if str[i] == str[j] or j-i==1: L[i][j] = L[i-1][j-1] + 2
         else: L[i][j] = max(L[i][j-1], L[i+1][j])
 
-
+#Given a number, find the next smallest palindrome
+def f(num):
+    case1=True
+    n=len(num)
+    for i in xrange(num):
+        if i!='9': case1=False
+    if case1: return 1+'0'*(n-2)+1
+    if n%2==0:
+        
+    else:
     

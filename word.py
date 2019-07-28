@@ -52,3 +52,18 @@ def one_diff(self,w1,w2):
               visited[i]=True
     return 0
 
+#word boggle. Better if done with trie data structure
+def dfs(i,j,n,m,matrix,word);
+  visited[i][j]=True
+  if word in words: result.append(word)
+  if i+1<n and visited[i+1][j] is not False: dfs(i+1,j,n,m,matrix,word+matrix[i+1][j])
+  if i-1<=0 and visited[i-1][j] is not False: dfs(i-1,j,n,m,matrix,word+matrix[i-1][j])
+  if j+1<m and visited[i][j+1] is not False: dfs(i,j+1,n,m,matrix,word+matrix[i][j+1])
+  if j-1<=0 and visited[i][j-1] is not False: dfs(i,j-1,n,m,matrix,word+matrix[i][j-1])
+
+n,m=len(matrix),len(matrix[0])
+result=[]
+for i in xrange(n):
+  for j in xrange(m):
+    visited=[[False for _ in xrange(m)] for - in xrange(n)]
+    dfs(i,j,visited,"") 

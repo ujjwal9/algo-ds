@@ -15,13 +15,6 @@ def pascal( row):
 			p[i][j]=p[i-1][j-1]+p[i-1][j]
 
 =========================================================================================================
-#2 sum. use hashmap and check if the numbers are not same
-
-#3 sum. Store pair wise value and check if the no are not same
-
-#4 sum. Store 2 pair wise value and check if in both pair the indexes are not same
-
-#find a triplet in an array whose sum is closest to a given number
 
 #Find one triplet such that indexes are in increasing order so as values at index.
 #i<j<k and a[i]<a[j]<a[k]. Find a triplet like this in linear time
@@ -132,7 +125,6 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 
 =========================================================================================================
 
-
 #find k closest element to a given value
 #sort the array then find the element using binary search and then move its right and left to get the closest element
 
@@ -142,20 +134,6 @@ def largest_rectangular_area_histogram(arr, n=len(arr)):
 
 #Shuffle a given array using Fisher Yates shuffle Algorithm
 
-#Stock Buy Sell to Maximize Profit
-#find the local minima and local maxima and substract it and do for remaining array
-def stock_buy_sell(price):
-	if len(price)<2: return
-	buy,sell=[],[]
-	i=0
-	while i<len(price):
-		while i<len(price)-1 and price[i+1]<=price[i]: i+=1
-		if i==len(arr)-1: return
-		buy.append(i+1)
-		while i<len(price) and price[i]>=price[i-1]: i+=1
-		sell.append(i-1)
-
-
 def find_first_non_repeating_character_in_a_string():
 	#use LinkedHashMap
 
@@ -164,7 +142,18 @@ def find_first_non_repeating_character_in_a_string():
 
 #next greater element.find the first element arr[i-1]<arr[i] then swap it with the lowest element
 #greater than arr[i-1] and then sort the arr[i:]
+def f(num):
+	n=len(num)
+	i=n-1
+	while i>0 and num[i-1]>num[i]: i-=1
+	if i==0: return num
+	less=i
+	for j in xrange(i+1, n):
+		if arr[j]>num[i-1] and arr[j]<arr[less]: less=j
+	arr[i],arr[less]=arr[less],arr[i]
+	arr[i:].sort()
 
-def f()
+
+
 
 
