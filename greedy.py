@@ -14,6 +14,7 @@ def activity_selection(start, end):
 	print result
 
 #merge overlapping intervals
+# Minimum Number of Arrows to Burst Balloons same solution.
 def merge(start,end):
     zipped=zip(start,end)
     zipped=sorted(zipped, lambda x: (x[0],x[1]))
@@ -60,17 +61,18 @@ def maxProfit(prices):
 =========================================================================================================
 
 #gas station
-def f(l):
-	start,gas,total_gas=0,0,0
-	for i in xrange(len(l)):
-		pump=l[i]
-		gas = gas+pump[0]
-		total_gas+=pump[0]
-		if gas-pump[1]<0:
-			gas=0
-			start=i+1
-	if total_gas
-
+def f(arr):
+    start,current,n,a=0,1,len(arr),0
+    for i in xrange(n): a+=arr[i][0]-arr[i][1]
+    if i<0: return -1
+    curr_petrol=arr[start][0]-arr[start][1]
+    while end!=start:
+        while curr_petrol<0 and start!=end:
+            curr_petrol-=arr[start][0]-arr[start][1]
+            start+=(start+1)%n
+        curr_petrol+=arr[current][0]-arr[current][1]
+        current+=(current+1)%n
+    return start
 
 
 

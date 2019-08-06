@@ -2,8 +2,7 @@
 #terminating condition should be the result bakctracking is_safe should be after for loop 
 #ie it should be first checked if the solution is viable or not.
 def permutation(str_arr, start, end):
-	if(start==end-1): 
-		print ''.join(str_arr)
+	if(start==end-1): print ''.join(str_arr)
 	else:
 		for i in xrange(start, end):
 			str_arr[start], str_arr[i] = str_arr[i], str_arr[start]
@@ -14,7 +13,9 @@ permutation(list("abc"), 0 , 3)
 
 #this is not backtracking algo its simple recursion
 def all_subsets(arr, str, i):
-	if i==len(arr): print str
+	if i==len(arr): 
+		print str
+		return
 	all_subsets(arr, str+arr[i], i+1)
 	all_subsets(arr, str, i+1)
 
@@ -25,7 +26,7 @@ def is_safe(maze, x, y):
 
 def rat_in_a_maze(maze, x, y, sol=[[0 for _ in xrange(N)] for _ in xrange(M)]):
 	if x==N-1 and y==M-1: 
-		sol[x][y]=1
+		sol[x][y]=1 #just used to marked the valid path
 		return True
 	if is_safe(maze, x, y):
 		sol[x][y]=1
@@ -51,6 +52,14 @@ def knight_tour(x, y, move_x, move_y, chess, i):
 	chess[x][y]=False
 	return False		
 
+def knight_tour(x,y,dp,i=0):
+    if i==63: return True
+    dp[x][y]=True
+    for i in xrange(len(m_x)):
+        if is_safe(m_x[i],m_y[i],dp):
+        	if knight_tour(m_x[i],m_y[i],dp,i+1): return True
+    dp[x][y]=False
+    return False
 
 move_x=[2, 1, -2, -1, 2, 1, -2, -1]
 move_y=[1, 2, 1, 2, -1, -2, -1, -2]
@@ -99,8 +108,7 @@ def sudoku(grid):
 	for n in xrange(1, 10):
 		if is_safe(grid, row, col, n)
 			grid[row][col]=n
-			if sudoku(grid) == True
-				return True
+			if sudoku(grid) == True: return True
 		grid[row][col]=0
 	return False
 

@@ -21,7 +21,7 @@ def alien_dictionary(words):
 		if visited[node]==False: topological_sort(node, visited, result)
 	print result
 
-#Given a set of packages or jars, with dependencies over each other. Write code to provide ordering, in which these packages should be compiled.
+#Given a set of packages wor jars, with dependencies over each other. Write code to provide ordering, in which these packages should be compiled.
 
 #Generate all palindromic numbers less than n
 

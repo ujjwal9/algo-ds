@@ -1,31 +1,30 @@
-#Topcoder has some good doc on dp
-#Dp one way to think is of making 1D array of the total no like knapsack
+#Topcoder has some good doc on dp. Dp one way to think is of making 1D array of the total no like knapsack
 #for recursion solution that requires to loop over all the values use cut rod algorithm
-# Longest incresing subsequence(LIS), find min no perfect squares
+#find min no perfect squares
+http://people.csail.mit.edu/bdean/6.046/dp/
+https://cp-algorithms.com/sequences/longest_increasing_subsequence.html
+https://www.sanfoundry.com/dynamic-programming-problems-solutions/
+
+#Longest incresing subsequence(LIS)
 #https://www.geeksforgeeks.org/variations-of-lis-dp-21/
-#Lots of problem on LIS 
 #Building bridges
 #Maximum sum increasing subsequence
 #The longest chain
-#Box Stacking
-#Always solve https://www.sanfoundry.com/dynamic-programming-problems-solutions/
+#Box Stacking, russian doll, envelopes. do a sort by width,height increasing and then do LIS
 #Longest zigzag sequence https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
-#
+#longest bitonic subsequence. for arr[i] do LIS till and LDS from arr[i] till end
 def lis_dp(arr):
 	lis=[1]*len(arr)
-	for i in xrange(1, n):
-		for j in xrange(0, i):
-			if arr[j]<arr[i] and lis[i]<lis[j]+1 : 
-				lis[i]=lis[j]+1
-
-#russian doll
-#do a sort by width,height increasing and then do LIS
+	for i in xrange(1, len(arr)):
+		for j in xrange(i):
+			if arr[j]<arr[i] and lis[i]<lis[j]+1: lis[i]=lis[j]+1
 
 def lcs_dp(a1, a2):
 	l = [[0]*(len(a1)+1) for i in xrange(len(a2)+1)]
 	for i in xrange(len(a1)+1):
 		for j in xrange(len(a2)+1):
-			if a1[i-1]==a2[j-1]: l[i][j]=1+l[i-1][j-1]
+			if i==0 or j==0: l[i][j]=0
+			elif a1[i-1]==a2[j-1]: l[i][j]=1+l[i-1][j-1]
 			else l[i][j]=max(l[i-1][j], l[i][j-1])
 	return l[len(a1)][len(a2)]
 
@@ -34,8 +33,8 @@ def edit_distance(w1,w2):
 	dp=[0 for _ in xrange(m+1) for _ in xrange(n+1)]
 	for i in xrange(n+1):
 		for j in xrange(m+1):
-			if i==0: dp[i][j]=m
-			elif j==0: dp[i][j]=n
+			if i==0: dp[i][j]=j
+			elif j==0: dp[i][j]=i
 			elif w1[n-1]==w2[m-1]: dp[i][j]=dp[i-1][j-1]
 			else dp[i][j]=1+min(dp[i][j-1] #delete
 								dp[i-1][j] #insert
@@ -105,14 +104,6 @@ def f(v,n=len(v)):
 		dp[i]=max(v[i]+dp[i-2],dp[i-1])
 		
 ======================================================================================================================================
-
-#you can traverse down, right and lower diagonally till m,n all values positive
-def min_cost_path(cost, m, n):
-	dp[]=[[0 for _ in xrange(m+1) for _ in xrange(n+1)]]
-	for i in xrange(1,m+1):
-		for j in xrange(1,n+1):
-			dp[i][j]=min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+cost[i,j]
-
 #count no of binary strings without consecutive 1's
 def binary_strings(N):
 	zero=[0]*(N+1)
@@ -162,11 +153,12 @@ def painters_partition_dp(arr,n,k):
 			for p in xrange(1,j+1):
 				best=min(best,max(dp[i-1][p],sum(arr,p,j-1)))
 
+#Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces.
 #go through a loop for all the cases
 def cut_rod(price, n):
 	if n<=0: return 0
 	max_value=-sys.maxint
-	for i in xrange(0, n): max_value = max(max_value, price[i]+cut_rod(start, n-1-i))	
+	for i in xrange(0, n): max_value = max(max_value, price[i]+cut_rod(prices, n-i-1))	
 	return max_value
 
 #precalculated values in dp
@@ -236,7 +228,7 @@ def subset_sum(arr, summ):
 			if j<arr[i-1]: dp[i][j]=False
 			if j>=arr[i-1]: dp[i][j]=dp[i-1][j] or dp[i-1][j-arr[i-1]]
 
-#https://www.geeksforgeeks.org/print-equal-sum-sets-array-partition-problem-set-2/
+#https://www.gedp.eksforgeeks.org/print-equal-sum-sets-array-partition-problem-set-2/
 
 
 #Minimum sum partition non negative integers
@@ -270,8 +262,16 @@ def max_coins(arr):
 
 ===========================================================================================================================
 #jump game 
-
+def f(jumps):
+	n=len(jumps)
+	dp=[0]*(n)
+	dp[0]=1
+	for i in xrange(n):
+		for j in xrange(jumps[i]):
+			if dp[i]+j<n: dp[dp[i]+j]=min(dp[dp[i]+j], dp[i]+j)
 
 #jump game II
+
+===========================================================================================================================
 
 

@@ -57,6 +57,8 @@ def f(left,right):
 #A doubly linked list having exactly one of the node pointing to a random node in list, correct the doubly linked list.
 #check which pointer is longer and then check for each node
 
+#https://www.geeksforgeeks.org/pairwise-swap-elements-of-a-given-linked-list-by-changing-links/
 
-
+#duplicate a ll with next and random pointers
+#Create the copy of node 1 and insert it between node 1 & node 2 in original Linked List
 

@@ -72,6 +72,10 @@ class Graph:
 				if check_cycle_DAG(i, parents) == True: return True
 		return False
 
+	#check if a DAG is strongly connected
+	def scc(graph):
+
+
 	#do BFS use m=2 coloring problem and assign it to 2 coloring groups
 	def is_bapartite(self, node):
 		color=[-1]*self.no_of_nodes

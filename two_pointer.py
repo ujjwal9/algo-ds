@@ -14,8 +14,6 @@ def f(arr):
 			elif arr[i]+arr[l]+arr[r]<0:l+=1
 		else: r-=1
 
-#First negative integer in every window of size k
-
 #Given an array and a number x check for a pair with sum as x
 def f(arr, x, n=len(arr)):
 	l,h=0,n-1
@@ -77,7 +75,20 @@ def f(arr,x):
 #4 sum
 #sort and then keeping (0..n-3) use 3 sum
 
+#First negative integer in every window of size k
 
-
+#https://www.careercup.com/question?id=5728764059713536
+#ballon
+def ballon(arr):
+	if len(arr)==0 :return 0
+	seq_break=1
+	same_no=0
+	highest_same_no=0
+	for i in xrange(1,len(arr)):
+		if arr[i-1]-arr[i]>1: seq_break+=1
+		if arr[i-1]==arr[i]: same_no+=1
+		else: same_no=0
+		highest_same_no=max(highest_same_no,same_no)
+	return highest_same_no+seq_break
 
 

@@ -43,21 +43,33 @@ def k_sorted_array(arr,k):
 
 
 #median in a stream of integers
+def add(num):
+	heapq.heappush(max_heap, -heapq.heappushpop(min_heap, num))
+	if len(min_heap)<len(max_heap): heapq.heappush(min_heap, -heapq.heappop(max_heap))
 
+def get_median():
+	if len(min_heap)>len(max_heap): return min_heap[0]
+	else: return (min_heap[0]+max_heap[0])/2
 
+max_heap=[]
+min_heap=[]
 #kth largest or smallest element in heap
 
 #merge k sorted arrays
 def f(arr, k):
 	h=[]
+	result=[]
 	for i in xrange(arr): heappush(heap,(arr[i][0],(i,0)))
 	while h:
 		i,j=heappop(h)
+		result.append(arr[i][j])
 		if j<len(arr[i]): heappush(heap,(arr[i][j+1],(i,j+1)))
 	
+#skyline problem
+#use o(n2)
 
-
-
+#k pairs with smallest sum. Use a min heap and add (i+1,j) and (i,j+1) and keep a set to
+# check if the numbers are not duplicated in the heap
 
 
 

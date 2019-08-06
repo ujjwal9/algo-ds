@@ -1,3 +1,5 @@
+#Types of problems in binary tree
+#Traversals, Construction and conversion, checking and printing, summation, LCA, misc
 class Node:
 	def __init__(self, data):
 		self.data=data
@@ -208,6 +210,59 @@ def max_sum_of_nodes_no_two_are_adjacent(node):
 	left,right=max_sum_of_nodes_no_two_are_adjacent(node.left),max_sum_of_nodes_no_two_are_adjacent(node.right)
 	return max(left+right, node.data)
 
+#path sum. Root to leaf sum equal to a number
+def path_sum(node, num, s=0):
+	if node is None: return False
+	if node.left is None and node.right is None and s+node.val==num: return True
+	return path_sum(node.left, num, s+node.val) or path_sum(node.right, num, s+node.val)
+
+#path sum2. Return all possible root to leaf paths where sum==num
+def path_sum_2(node, num, s=0, l):
+	global result
+	if node is None: return False
+	total_sum=s+node.val
+	l=l.append(node.val)
+	if node.left is None and node.right is None and total_sum==num: 
+		result.append(l.copy())
+		l.pop()
+		return
+	path_sum_2(node.left, num, total_sum, l)
+	path_sum_2(node.left,num,total_sum, l)
+	l.pop()
+
+#path sum 3. Number of paths that sum to a value
+def path_sum_3(node, num):
+	global result,s
+    if node is None: return 
+    if sum-node.val in s: result+=1
+    if node.val==sum: result+=1
+    temp=[]
+    for n in s: temp.append(n+node.val)
+    temp.append(node.val)
+    s=temp
+    temp=[]
+    t(node.left, sum)
+    t(node.right, sum)
+    s.remove(node.val)
+    for n in s: temp.append(n-node.val)
+    s=temp
+
+result=0
+s=[]
+path_sum_3(node, num)
+
+
+result=0
+s=set()
+
+#find sum of only left nodes
+def f(node):
+	if node is None: return
+	if node.left: sum+=node.left.val
+	f(node.left)
+	f(node.right)
+
+result=0
 ===================================================================================================================
 
 def invert(node):
@@ -427,5 +482,24 @@ def mergeTrees(t1, t2):
     t1.left,t1.right=mergeTrees(t1.left,t2.left),mergeTrees(t1.right,t2.right)
     return t1
 
+===================================================================================================================
+#Reverse tree path using Queue
+#https://www.geeksforgeeks.org/reverse-tree-path-using-queue/
+from collections import deque
+def f(node,n):
+	if node is None: return None
+	if node is n and q:
+		new_node=q.popleft()
+		q.add(node)
+		return new_node
+	q.add(node)
+	node.left, node.right=f(node.left,n),f(node.right,n)
+
+	return node
+
+
+
+
+q=[]
 
 

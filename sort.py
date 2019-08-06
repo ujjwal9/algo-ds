@@ -23,7 +23,7 @@ def merge(arr,start,end):
 			arr[k]=l[i]
 			i+=1
 		else:
-			arr[k]=r[j]
+			arr[k]=r[j]	
 			j+=1
 		k+=1
 

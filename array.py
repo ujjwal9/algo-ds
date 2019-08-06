@@ -153,7 +153,9 @@ def f(num):
 	arr[i],arr[less]=arr[less],arr[i]
 	arr[i:].sort()
 
-
+#maximum length of string sub string that is not palindrome
+#cases : all alphabets are same: 0
+#if first and last are not same then n else n-1
 
 
 
