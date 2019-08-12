@@ -11,19 +11,9 @@ public abstract class Piece {
 
 public class King extends Piece { 
     private boolean castlingDone = false; 
-    public King(boolean white) 
-    { 
+    public King(boolean white) { 
         super(white); 
-    } 
-    public boolean isCastlingDone() 
-    { 
-        return this.castlingDone == true; 
-    } 
-  
-    public void setCastlingDone(boolean castlingDone) 
-    { 
-        this.castlingDone = castlingDone; 
-    } 
+    }  
   
     @Override
     public boolean canMove(Board board, Spot start, Spot end) 
@@ -41,46 +31,7 @@ public class King extends Piece {
         } 
   
         return this.isValidCastling(board, start, end); 
-    } 
-  
-    private boolean isValidCastling(Board board,  
-                                     Spot start, Spot end) 
-    { 
-  
-        if (this.isCastlingDone()) { 
-            return false; 
-        } 
-  
-        // Logic for returning true or false 
-    } 
-  
-    public boolean isCastlingMove(Spot start, Spot end) 
-    { 
-        // check if the starting and  
-        // ending position are correct 
-    } 
-} 
-
-public class Knight extends Piece { 
-    public Knight(boolean white) 
-    { 
-        super(white); 
-    } 
-    @Override
-    public boolean canMove(Board board, Spot start,  
-                                            Spot end) 
-    { 
-        // we can't move the piece to a spot that has 
-        // a piece of the same colour 
-        if (end.getPiece().isWhite() == this.isWhite()) { 
-            return false; 
-        } 
-  
-        int x = Math.abs(start.getX() - end.getX()); 
-        int y = Math.abs(start.getY() - end.getY()); 
-        return x * y == 2; 
-    } 
-} 
+}
 
 //Similarly we can design for  Queen, Pawns, Rooks, Bishops etc.
 public class Board { 
@@ -133,33 +84,12 @@ public class Board {
 public abstract class Player { 
     public boolean whiteSide; 
     public boolean humanPlayer; 
-  
-    public boolean isWhiteSide() 
-    { 
-        return this.whiteSide == true; 
-    } 
-    public boolean isHumanPlayer() 
-    { 
-        return this.humanPlayer == true; 
-    } 
 } 
   
 public class HumanPlayer extends Player { 
-  
-    public HumanPlayer(boolean whiteSide) 
-    { 
-        this.whiteSide = whiteSide; 
-        this.humanPlayer = true; 
-    } 
 } 
   
-public class ComputerPlayer extends Player { 
-  
-    public ComputerPlayer(boolean whiteSide) 
-    { 
-        this.whiteSide = whiteSide; 
-        this.humanPlayer = false; 
-    } 
+public class ComputerPlayer extends Player {  
 }
 
 public class Move { 
@@ -168,7 +98,6 @@ public class Move {
     private Spot end; 
     private Piece pieceMoved; 
     private Piece pieceKilled; 
-    private boolean castlingMove = false; 
   
     public Move(Player player, Spot start, Spot end) 
     { 
@@ -176,16 +105,6 @@ public class Move {
         this.start = start; 
         this.end = end; 
         this.pieceMoved = start.getPiece(); 
-    } 
-  
-    public boolean isCastlingMove() 
-    { 
-        return this.castlingMove == true; 
-    } 
-  
-    public void setCastlingMove(boolean castlingMove) 
-    { 
-        this.castlingMove = castlingMove; 
     } 
 }
 

@@ -26,7 +26,7 @@ def heapsort(arr):
 		arr[i],arr[0]=arr[0],arr[i]
 		heapify(arr, i, 0)
 
-#find k nearest element in an array
+#find k nearest element in an array 
 
 #sort a k sorted array
 def k_sorted_array(arr,k):

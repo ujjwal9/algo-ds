@@ -20,7 +20,7 @@ def word_wrap(arr, dp, N, i):
     return minn
 
 dp=[False]*(len(arr))
-for i in arr:
+for i in len(arr):
     if i+1>len(arr) or arr[i+1]==' ': dp[i]=True
 word_wrap(arr,dp,N,0)
 
@@ -34,7 +34,7 @@ def one_diff(self,w1,w2):
   if c==1:return True
   else: return False
         
-  def ladderLength(self, beginWord, endWord, wordList):
+def word_ladder(self, beginWord, endWord, wordList):
     if endWord not in wordList: return 0
     result=1
     q=[]
@@ -43,7 +43,7 @@ def one_diff(self,w1,w2):
     while q:
       times=len(q)
       result+=1
-      for i in xrange(len(q)):
+      for i in xrange(times):
         w=q.pop(0)
         for i in xrange(len(wordList)):
           if visited[i]==False and one_diff(w,wordList[i]) and w!=wordList[i]:

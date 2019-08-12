@@ -13,11 +13,20 @@ https://www.sanfoundry.com/dynamic-programming-problems-solutions/
 #Box Stacking, russian doll, envelopes. do a sort by width,height increasing and then do LIS
 #Longest zigzag sequence https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
 #longest bitonic subsequence. for arr[i] do LIS till and LDS from arr[i] till end
+#https://www.geeksforgeeks.org/weighted-job-scheduling/
 def lis_dp(arr):
 	lis=[1]*len(arr)
 	for i in xrange(1, len(arr)):
 		for j in xrange(i):
 			if arr[j]<arr[i] and lis[i]<lis[j]+1: lis[i]=lis[j]+1
+
+
+def weighted_job_scheduling(arr,n=len(arr)):
+	arr=sorted(arr, key=lambda x: x[0])
+	dp=[0]*n
+	for i in xrange(1,n):
+		for j in xrange(i):
+			if arr[i][1]<=arr[j][0] and dp[i]<dp[j]+arr[i][2]: dp[i]=dp[j]+arr[i][2]
 
 def lcs_dp(a1, a2):
 	l = [[0]*(len(a1)+1) for i in xrange(len(a2)+1)]
@@ -273,5 +282,28 @@ def f(jumps):
 #jump game II
 
 ===========================================================================================================================
+#Maximum sum such that no two elements are adjacent
+def f(arr):
+	incl,excl=0,0
+	for i in arr:
+		new_excl=max(excl,incl)
+		incl=excl+i
+		excl=new_excl
+	return max(incl,excl)
 
+===========================================================================================================================
+#assembly line
+def f():
+
+#maximum sum when adjacent elements from the same list and same index value from different list cant be
+def max_Sum( arr1, arr2, n=len(arr1)):
+    dp[n][2]
+    for i in xrange(n):
+        if(i==0):
+            dp[i][0] = arr1[i]; 
+            dp[i][1] = arr2[i];           
+       	else: 
+       		dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + arr1[i]); 
+       		dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + arr2[i]); 
+    return max(dp[n-1][0], dp[n-1][1])
 

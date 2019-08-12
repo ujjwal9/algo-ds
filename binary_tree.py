@@ -13,7 +13,7 @@ def height(node):
 
 def depth(node,d=0):
 	if node==None: return d
-	return max(depth(node.left,d+1), depth(node.right,d+1))+1
+	return max(depth(node.left,d+1), depth(node.right,d+1))
 
 #diameter or the width of a tree is the number of nodes on the longest path between two end nodes
 def diameter(node):
@@ -43,7 +43,7 @@ def postorder(node):
 	postorder(node.right)
 	print node.data
 
-def levelorder(root):
+def level_order(root):
 	queue=[]
 	queue.append(root)
 	while queue:
@@ -94,9 +94,27 @@ def diagonal_traversal(node,index=0,map=defaultdict(list)):
 
 #boundary traversal of a binary tree
 #left boudary leaving the last element. All leaf nodes and the right boundary in reverse
+def left(node):
+	if node is None or (node.left is None and node.right is None) : return
+	print node.val
+	left(node.left)
+	if node.left is None and node.right: left(node.right) 
+
+def leaf(node):
+	if node is None: return
+	if node.left is None and node.right is None: print node.val
+	leaf(node.left)
+	leaf(node.right)
+
+def right(node):
+	if node is None or (node.left is None and node.right is None): return
+	print node.val
+	right(node.right)
+	if node.right is None and node.left: right(node.left)
+
 ===================================================================================================================
 
-#using stack
+#iterative way of binary tree traversal, using stack.
 def preorder_without_recursion(root):
 	stack=[]
 	stack.append(root)
@@ -127,7 +145,7 @@ def inorder_without_recursion(root):
 			node=node.left
 		else:
 			node=stack.pop()
-			print node.val
+			if node: print node.val
 			node=node.right
 
 ===================================================================================================================
@@ -151,7 +169,7 @@ def bottom_view(node):
 				queue.append(poped.right)
 				mapping[poped.right]=mapping[poped]+1
 
-#left view of binary tree
+#left view of binary tree. Level order traversal
 def left_view(node):
 	queue=[]
 	while queue:
@@ -161,6 +179,9 @@ def left_view(node):
 			node=q.pop(0)
 			if node.left: queue.append(node.left)
 			if node.right: queue.append(node.right)
+
+#right view of binary tree.Level order traversal
+def right_view(node):
 
 #Populating Next Right Pointers in Each Node
 def connect(self, root):
@@ -205,6 +226,7 @@ def max_path_sum_leaf_to_leaf(node):
 	max_path_sum=max(max_path_sum, left+right+node.data)
 	return max(max(left, right)+ node.data)
 
+#for positive no only
 def max_sum_of_nodes_no_two_are_adjacent(node):
 	if node==None: return 0
 	left,right=max_sum_of_nodes_no_two_are_adjacent(node.left),max_sum_of_nodes_no_two_are_adjacent(node.right)
@@ -219,13 +241,10 @@ def path_sum(node, num, s=0):
 #path sum2. Return all possible root to leaf paths where sum==num
 def path_sum_2(node, num, s=0, l):
 	global result
-	if node is None: return False
+	if node is None: return
 	total_sum=s+node.val
 	l=l.append(node.val)
-	if node.left is None and node.right is None and total_sum==num: 
-		result.append(l.copy())
-		l.pop()
-		return
+	if node.left is None and node.right is None and total_sum==num: result.append(l.copy())
 	path_sum_2(node.left, num, total_sum, l)
 	path_sum_2(node.left,num,total_sum, l)
 	l.pop()
@@ -287,8 +306,8 @@ def bt_sll(node):
 		node.left=None
 	return node
 
-#flatten binary tree to double linked list. This can also be used in questions where it is required to 
-#do some operations on the bt without using extra space. Flatten it then do operations on dll
+#flatten binary tree to double linked list.This is inorder formation.This can also be used in
+#questions where it is required to do some operations on the bt without using extra space. Flatten it then do operations on dll
 def bt_dll(node):
 	global prev
 	if node==None: return
@@ -306,7 +325,7 @@ def bt_dll(node):
 #Keep a hashmap and then put(height, node.val).Calculate the height of each node order=max(left, right)
 def print_nodes_bt_as_they_become_leaf_node(node,map=defaultdict(list)):
 	if node==None: return 0
-	order=max(ordered(node.left), ordered(node.right))+1
+	order=max(print_nodes_bt_as_they_become_leaf_node(node.left), print_nodes_bt_as_they_become_leaf_node(node.right))+1
 	map[order].append(node.val)
 	return order
 
@@ -320,7 +339,6 @@ def is_subset_tree(node, subset_node, subset_root):
 #first element of preorder is root. Find the elements in the inorder as the sequence in preorder and construct the tree
 
 #construct a binary tree from inorder and postorder traversal
-
 
 
 #construct a binary tree from given array in level order fashion
@@ -362,21 +380,21 @@ def numTrees(self, n):
 
 ===================================================================================================================
 #https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/
-def recoverFromPreorder(self, s):
-	root=TreeNode(s[0])
-    parents=defaultdict(list)
-    parents[0].append(root)
-    depth=0
-    for i in xrange(1,len(s)):
-	    if s[i] != '-':
-	        n=TreeNode(s[i])
-	        parent=parents[depth-1][len(parents[depth-1])-1]
-	        if parent.left is None: parent.left=n
-	        else: parent.right=n
-	        parents[depth].append(n)
-	        depth=0
-	    else:depth+=1
-   return root
+# def recoverFromPreorder(self, s):
+# 	root=TreeNode(s[0])
+#     parents=defaultdict(list)
+#     parents[0].append(root)
+#     depth=0
+#     for i in xrange(1,len(s)):
+# 	    if s[i] != '-':
+# 	        n=TreeNode(s[i])
+# 	        parent=parents[depth-1][len(parents[depth-1])-1]
+# 	        if parent.left is None: parent.left=n
+# 	        else: parent.right=n
+# 	        parents[depth].append(n)
+# 	        depth=0
+# 	    else:depth+=1
+#    return root
 
 ===================================================================================================================
 
@@ -435,8 +453,7 @@ result=-1
 visited={}
 
 ===================================================================================================================
-#serialize and deserialize a bianry tree
-#storing preorder with -1 as null representation
+#serialize and deserialize a binary tree. Can be serialized like preorder keeping the null as -1 and also level order traversal
 def serialize(node):
 	if node is None:
 		print -1
@@ -447,14 +464,13 @@ def serialize(node):
 
 def deserialize():
 	global i, arr, root
-	if i>=len(arr): return
-	if arr[i]!=-1:
-		node=Node(arr[i])
-		i+=1
-		node.left=deserialize()
-		i+=1
-		node.right=deserialize()
-		return node
+	if i>=len(arr) or arr[i]==-1: return
+	node=Node(arr[i])
+	i+=1
+	node.left=deserialize()
+	i+=1
+	node.right=deserialize()
+	return node
 #[8 4 -1 -1 12 10 -1 -1 14 -1 -1 -1]
 ===================================================================================================================
 class Solution(object):

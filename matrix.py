@@ -86,15 +86,18 @@ def f(matrix, num):
 		if matrix[i][j]>num:i+=1
 	return (-1,-1)
 	
-#start with the last element in the first row
-def f(matrix):
-
 #Print all elements in sorted order from row and column wise sorted matrix
 #consider it as merging of k sorted array
-
-
+#Find a common element in all rows of a given row-wise sorted matrix
 #Kth smallest element in a row-wise and column-wise sorted 2D array
-#same as finding a kth smallest element in a set of sorted arrays
+from heapq import heappush, heappop 
+def f(matrix, k):
+	l=[]
+	n,m=len(matrix),len(matrix[0])
+	for i in xrange(m): heapq.heappush(l,(matrix[0][i], (0,i)))	
+	for i in xrange(k):
+		node,vector=heapq.heappop()
+		if vector[0]+1< n: heapq.heappush(matrix[vector[0]][vector[0]+1])
 
 #A 2d matrix of 0 and 1 in which rows are sorted. You have to find the row number which has the Maximum number of 1.
 #same as row wise and column wise start from top most if 1 move left if 0 move down
@@ -104,10 +107,6 @@ def f(matrix):
 		while j>=0 and arr[i][j]==1: j-=1
 		while i<n and arr[i][j]==0: i+=1
 	result m-j
-
-#Find a common element in all rows of a given row-wise sorted matrix
-#Same as merging k sorted arrays
-
 
 
 
