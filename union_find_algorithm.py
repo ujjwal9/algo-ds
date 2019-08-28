@@ -16,7 +16,7 @@ def find_parent(i):
 graph=defaultdict(list)
 parent=[-1]*nodes
 for i in graph:
-	for j in graph[i]:
+	for j in graph[i]:	
 		x,y=find_parent(i),find_parent(j)
 		if x==y: return True
 		union(x,y)

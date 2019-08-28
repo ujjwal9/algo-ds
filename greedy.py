@@ -13,6 +13,25 @@ def activity_selection(start, end):
 			prev=curr
 	print result
 
+#min no of platforms required at a railway station
+def findPlatform(arr,dep,n): 
+    arr.sort() 
+    dep.sort() 
+    plat_needed = 1
+    result = 1
+    i = 1
+    j = 0
+    while (i < n and j < n):
+        if (arr[i] < dep[j]): 
+            plat_needed+=1
+            i+=1
+            if (plat_needed > result):  
+                result = plat_needed  
+        else: 
+            plat_needed-=1
+            j+=1   
+    return result
+
 #merge overlapping intervals
 # Minimum Number of Arrows to Burst Balloons same solution.
 def merge(start,end):

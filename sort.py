@@ -74,6 +74,9 @@ def merge_k_sorted_arrays(arr,k):
 			heapq.heappush(heap, (arr[popped[1][0]][popped[1][1]+1], (popped[1][0],popped[1][1]+1)))
 		print popped[0]
 
+#radix sort
+
+
 #merge k sorted ll
 	
 ===========================================================
@@ -97,6 +100,9 @@ def maxPartitions(arr, n):
           if (max_so_far == i): 
             ans += 1
     return ans 
- 
 
+#find kth largest element in . Use quick sort
 
+#min no of swaps required to sort an array. The problem can be visualized as a graph
+def min_swap_to_sort_array(arr):
+	
