@@ -34,7 +34,7 @@ def f(arr,l,h,key):
 def f(s,e,arr,n=len(arr)):
 	mid=(s+e)/2
 	if mid==0 or mid==n-1: return mid
-	if arr[mid]<arr[mid-1] and arr[mid]<arr[mid+1]: return mid
+	if arr[mid]>arr[mid-1] and arr[mid]<arr[mid+1]: return mid
 	if arr[mid]<arr[n-1]: f(s,mid-1)
 	else: f(mid+1, e)
 
