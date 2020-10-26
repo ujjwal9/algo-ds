@@ -14,13 +14,18 @@ https://www.sanfoundry.com/dynamic-programming-problems-solutions/
 #Longest zigzag sequence https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
 #longest bitonic subsequence. for arr[i] do LIS till and LDS from arr[i] till end
 #https://www.geeksforgeeks.org/weighted-job-scheduling/
+def recursion(a,i=0,p_i=-1):
+	c=-1
+    if p_i==-1 or a[i]>a[p_i]:c=f(a,i+1,i)+1
+    return max(c,f(a,i+1,p_i))
+
 def lis_dp(arr):
 	lis=[1]*len(arr)
 	for i in xrange(1, len(arr)):
 		for j in xrange(i):
 			if arr[j]<arr[i] and lis[i]<lis[j]+1: lis[i]=lis[j]+1
 
-
+#Given n jobs by start time, finish time, profit>=0, max profit that you can get
 def weighted_job_scheduling(arr,n=len(arr)):
 	arr=sorted(arr, key=lambda x: x[0])
 	dp=[0]*n
@@ -47,8 +52,7 @@ def edit_distance(w1,w2):
 			elif w1[n-1]==w2[m-1]: dp[i][j]=dp[i-1][j-1]
 			else dp[i][j]=1+min(dp[i][j-1] #delete
 								dp[i-1][j] #insert
-								dp[i-1][j-1] #replace
-				)
+								dp[i-1][j-1]) #replace
 
 ======================================================================================================================================
 

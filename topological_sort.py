@@ -1,4 +1,5 @@
-#Topologocal sort for DAG
+#Topologocal sort for DAG. Linear ordering of vertices such that for every ordering of its vertices such that for every directed edge uv u comes before v in ordering
+#Add vertices in DFS then reverse.
 def topological_sort(node, stak=[], visited):
 	visited[node]=True
 	for n in graph[node]:
