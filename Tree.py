@@ -1,3 +1,7 @@
+#Types of trees: Binary tree, BST, AVL,Threaded BT, B-tree. Data compression, file storage, manipulation of the arithmetic expression and game trees are some of the application of tree data structure.
+#It has n-1 edges
+
+
 #LCA of a n-ary tree
 def lca(node,n1,n2):
 	if node is None: return None

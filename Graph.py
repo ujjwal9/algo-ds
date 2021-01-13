@@ -1,5 +1,5 @@
 #Graph:
-# Only difference between a tree and graph is that graphs may contain cycles also, so we can come to same node again.
+#Differences between a tree and graph is that graphs may contain cycles, it doesnt contains root node and it can be disconnected also. Trees no of edges is n-1 n is no of nodes.
 #To avoid processing a node more than once, we use a boolean visited array.
 from collections import defaultdict
 import sys
@@ -8,6 +8,8 @@ import heapq
 #DFS connnected graph O(V+E)
 #graph can be either be represented as a matrix, as a map or a node with children
 #the visited array is required for a undirected tree not for a DAG like tree
+#For DAGs there is no root so loop over all the unvisited nodes for a functionality.
+#Tree, Back, Edge and Cross Edges in DFS of Graph
 class Graph:
 	def __init__(self, no_of_nodes):
 		self.graph = defaultdict(list)
@@ -24,29 +26,31 @@ class Graph:
 
 	def BFS(self, v):
 		self.visited[v] = True
-		queue=[]
-		queue.append(v)
-		while queue:
-			node = queue.pop(0)
+		dq=[]
+		dq.append(v)
+		while dq:
+			node = dq.pop(0)
 			print(node)
 			for i in self.graph[node]:
 				if(self.visited[i] == False):
 					self.visited[i] = True
-					queue.append(i)
+					dq.append(i)
 
 	def level_order_traversal(self, v):
 		self.visited[v]=True
-		queue=[]
-		queue.append(v)
-		while queue:
+		dq=[]
+		dq.append(v)
+		while dq:
 			l=size(queue)
 			for _ in xrange(l):
-				node=queue.pop(0)
+				node=dq.pop(0)
 				print(node)
 				for child in self.graph[node]:
 					if !self.visited[child]:
 						self.visited[child]=True
 						node.append(child)
+
+===================================================================================================================
 
 	def check_cycle_undirected_graph(self, node, parent):
 		visited[node]=True
@@ -72,7 +76,9 @@ class Graph:
 				if check_cycle_DAG(i, parents) == True: return True
 		return False
 
-	#check if a DAG is strongly connected
+===================================================================================================================
+
+	#check if a directed graph is strongly connected
 	def scc(graph):
 
 
@@ -94,43 +100,15 @@ class Graph:
 		return True	
 
 ===================================================================================================================
-#SPT(Shortest path tree)
-#Dijskstras Greedy approach
-# 1) One source and One Destination-
-# → Use A* Search Algorithm (For Unweighted as well as Weighted Graphs)
-
-# 2) One Source, All Destination –
-# → Use BFS (For Unweighted Graphs)
-# → Use Dijkstra (For Weighted Graphs without negative weights)
-# → Use Bellman Ford (For Weighted Graphs with negative weights)
-
-# 3) Between every pair of nodes-
-# → Floyd-Warshall
-#dijkstras and prims are almost same only in dijkstras sum of distance is taken
-
-#Floyd Warshall O(v^3)
-INF=9999999
-vertices=4
-def floyd_warshall(graph):
-	dist=[row[:] for row in graph]
-	for k in xrange(vertices):
-		for i in xrange(vertices):
-			for j in xrange(vertices):
-				dist[i][j]=min(dist[i][j], dist[i][k]+dist[k][j])
-
-
-graph = [[0,5,INF,10], 
-         [INF,0,3,INF], 
-         [INF, INF, 0,   1], 
-         [INF, INF, INF, 0]]
 
 #minimum spanning tree
-#Given an undirected and connected graph , a spanning tree of the graph  is a tree that spans 
-#(that is, it includes every vertex of)and is a subgraph of (every edge in the tree belongs to)
-#prims mst greedy algorithm
+# Given an undirected and connected graph G=(V,E), a spanning tree of the graph G is a tree that spans G (that is, it includes every vertex of G) and is a subgraph of 
+# G (every edge in the tree belongs to G)
+# prims mst greedy algorithm
+# idea is to traverse all vertices of graph using BFS and use a Min Heap to store the vertices not yet included in MST.
 class Node():
 	def __init__(self, min_distance):
-		adjacencies=[]
+		adjacencies=[] #edges
 		min_distance=sys.MAX_INT
 
 
@@ -149,11 +127,20 @@ def prims(root):
 		reached_nodes.append(popped)
 		for edge in popped.adjacencies:
 			node=edge.target
-			if node not in reached_nodes and node.min_distance>edge.weight:
-				node.min_distance=e.weight
+			if node not in reached_nodes and node.min_distance>edge.weight: node.min_distance=e.weight
 			node_queue.append(node)
 			heapq.heapify(node_queue)
 
+
+def kruskal():
+
+
+===================================================================================================================
+
+#finds min path from source to all the vertices
+#both directed and undirected graph
+#only positive edges
+#O(V + ElogV)
 def dijkstra(root):
 	root.min_distance=0
 	reached_nodes=[]
@@ -169,10 +156,48 @@ def dijkstra(root):
 				node.min_distance=new_distance
 			node_queue.append(node)
 			heapq.heapify(node_queue)
-			
-def kruskal():
 
-def bellman_ford():
+
+#All Pairs Shortest Path problem
+#Floyd Warshall O(v^3). Graph as a matrix
+INF=9999999
+vertices=4
+def floyd_warshall(graph):
+	dist=[row[:] for row in graph]
+	for k in xrange(vertices):
+		for i in xrange(vertices):
+			for j in xrange(vertices):
+				dist[i][j]=min(dist[i][j], dist[i][k]+dist[k][j])
+
+
+graph = [[0,5,INF,10], 
+         [INF,0,3,INF], 
+         [INF, INF, 0,   1], 
+         [INF, INF, INF, 0]]
+			
+
+#O(VE). Bellman Ford
+#DP approach. For negative weighted graphs also
+class Graph:
+	def __init__(self, vertices):
+		self.V=vertices
+		self.graph=[]
+
+	def add_edge(u,v,w):
+		self.graph.append(u,v,w)
+
+	def bellman_ford():
+		dist=[float("Inf")]*self.V
+		dist[src]=0
+		for _ in range(self.V-1):
+			for s,d,w in self.graph:
+				if dist[s] != float("Inf") and dist[s] + w < dist[d]:	dist[d] = dist[s]+w
+
+		for s, d, w in self.graph:
+            if dist[s] != float("Inf") and dist[s] + w < dist[d]:
+                print("Graph contains negative weight cycle")
+                return
+
 
 ===================================================================================================================
 #Flood fill algorithm O(nxm)
@@ -230,7 +255,20 @@ min_cash_flow(amount)
 
 ===================================================================================================================
 
-#clone an undirected graph
+#Maximum flow
+#In graph theory, a flow network is defined as a directed graph involving a source(S) and a sink(T) and several other nodes connected with edges.
+# Each edge has an individual capacity which is the maximum limit of flow that edge could allow.
+
+
+
+
+===================================================================================================================
+
+#Minimum flow
+
+===================================================================================================================
+
+#clone an undirected graph. Leetcode
 def f(node,n_node,mapp):
     mapp[n_node.val]=n_node
     for n in node.neighbors:
@@ -239,4 +277,39 @@ def f(node,n_node,mapp):
         if new_node.val not in mapp: f(n,new_node,mapp)	
 
 f(node,Node(node.val,[]),{})
+
+===================================================================================================================
+
+#count no of connected components in an undirected graph
+
+
+===================================================================================================================
+
+#Leetcode. Course Schedule. Make a DAG and check if it non cyclic
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        graph=self.make_graph(prerequisites)
+        visited,parents=[False]*numCourses,[False]*numCourses
+        for i in xrange(numCourses):
+            if not visited[i] and self.is_cyclic(i, graph,visited,parents): return False
+        return True
+    
+    def make_graph(self, p):
+        graph=defaultdict(list)
+        for i in p: graph[i[0]].append(i[1])
+        return graph
+    
+    def is_cyclic(self, node, graph, parents, visited):
+        visited[node],parents[node]=True,True
+        for i in graph[node]:
+            if parents[i]==True: return True
+            if visited[i] == False:
+                if self.is_cyclic(i,graph, parents, visited): return True
+        parents[node]=False
+        return False
+
+===================================================================================================================
+
+#Leetcode. Course Schedule II
+
 

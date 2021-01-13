@@ -1,7 +1,7 @@
 #make recursion not return the result but whether the current state is correct or not the 
 #terminating condition should be the result bakctracking is_safe should be after for loop 
 #ie it should be first checked if the solution is viable or not.
-def permutation(str_arr, start, end):
+def permutation(str_arr, start, end): #abc, acb, bac, bca, cba, cab
 	if(start==end-1): print ''.join(str_arr)
 	else:
 		for i in xrange(start, end):
@@ -11,6 +11,7 @@ def permutation(str_arr, start, end):
 
 permutation(list("abc"), 0 , 3)
 
+
 #this is not backtracking algo its simple recursion
 def all_subsets(arr, str, i):
 	if i==len(arr): 
@@ -19,7 +20,9 @@ def all_subsets(arr, str, i):
 	all_subsets(arr, str+arr[i], i+1)
 	all_subsets(arr, str, i+1)
 
-#rat in a maze
+==================================================================================================================================================
+
+#rat in a maze. Source is (0,0) destination (N-1,N-1) rat can move only forward/down. 0 mean block is dead 1 means block can be used to go to destination.
 def is_safe(maze, x, y):
 	if x>=0 and x<N and y>=0 and y<M and maze[x][y]=1:return True
 	return False
@@ -35,38 +38,31 @@ def rat_in_a_maze(maze, x, y, sol=[[0 for _ in xrange(N)] for _ in xrange(M)]):
 	sol[x][y]=0
 	return False
 
+==================================================================================================================================================
+
 #The knight(horse) is placed at the first block of an empty board and must visit each square exactly once
 def is_safe(x, y, chess):
 	if x>=0 and x<8 and y>=0 and y<8 and chess[x][y]: return True
 	return False
 
 
-def knight_tour(x, y, move_x, move_y, chess, i):
+def knight_tour(x, y, chess, i):
 	if i==64: return True
-	if is_safe(x, y, chess):
-		chess[x][y]=True
-		valid_square=True
-		for i in xrange(8):
-			valid_square = knight_tour(x+move_x[i], y+move_y[i], move_x, move_y, chess, i+1)
-			if valid_square: return True
+	for i in xrange(8):
+		new_x,new_y=x+move[i],y+move[i]
+		if is_safe(new_x, new_y, chess):
+			chess[x][y]=True
+			if knight_tour(new_x, new_y, chess, i+1): return True
 	chess[x][y]=False
 	return False		
-
-def knight_tour(x,y,dp,i=0):
-    if i==63: return True
-    dp[x][y]=True
-    for i in xrange(len(m_x)):
-        if is_safe(m_x[i],m_y[i],dp):
-        	if knight_tour(m_x[i],m_y[i],dp,i+1): return True
-    dp[x][y]=False
-    return False
 
 move_x=[2, 1, -2, -1, 2, 1, -2, -1]
 move_y=[1, 2, 1, 2, -1, -2, -1, -2]
 chess=[[False] for _ in xrange(8) for _ in xrange(8)]
 
-#n queens problem expected output is a binary matrix that has 1s where queens are placed so that no
-#2 can attack each other
+==================================================================================================================================================
+
+#n queens problem expected output is a binary matrix that has 1s where queens are placed so that no 2 can attack each other
 #trick is to try placing each queen in each column if position is wrong then recur for another one
 def is_safe(row, col, board):
 	for i in xrange(y):
@@ -87,6 +83,8 @@ def n_queens(board, col):
 
 N=4
 board=[[-1 for _ in xrange(N)] for _ in xrange(N)]
+
+==================================================================================================================================================
 
 #sudoku
 #get an unassigned row,col and try for all valid values
@@ -112,7 +110,6 @@ def sudoku(grid):
 		grid[row][col]=0
 	return False
 
-grid=[[0 for _ in xrange(9)] for _ in xrange(9)]
 grid =   [[3,0,6,5,0,8,4,0,0], 
           [5,2,0,0,0,0,0,0,0], 
           [0,8,7,0,0,0,0,3,1], 

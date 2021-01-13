@@ -1,4 +1,4 @@
-#Find next greater element for each array element 
+#Find next greater element for each array element. NGE
 def next_larger_element(arr):
 	stak=[]
 	result=[]

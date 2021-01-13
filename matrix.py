@@ -34,8 +34,8 @@ def f():
 	
 ================================================================================================================================
 
-#flood fill algorithm. how to implement fill() in ms paint
-def flood_fill(matrix,x,y,prevC,newC,M,N):
+#flood fill algorithm. how to implement fill() in ms paint. 
+def flood_fill(matrix,x,y,prevC,newC,M,N): prevC: previous colour, newC: new colour
 	if x<0 or x>=M or y<0 or y>=N or matrix[x][y]!=prevC: return
 	matrix[x][y]=newC
 	flood_fill(matrix,x,y+1,prevC,newC,M,N)
@@ -44,15 +44,18 @@ def flood_fill(matrix,x,y,prevC,newC,M,N):
 	flood_fill(matrix,x-1,y,prevC,newC,M,N)
 
 #Given a matrix of ‘O’ and ‘X’, replace ‘O’ with ‘X’ if surrounded by ‘X’
-def f(matrix):
+def f(matrix): # replace all ) with _
 	for i in xrange(len(matrix)):
 		for j in xrange(len(matrix)):
 			if matrix[i][j]=='O': matrix[i][j]='_'
-	for i in xrange(len(matrix)):
+	for i in xrange(len(matrix)): #replace all _ with 0
 		if matrix[0][i]=='_': flood_fill(matrix,0,i,'_','O',len(matrix),len(matrix))
 		if matrix[i][len(matrix)-1]=='_': flood_fill(matrix,i,len(matrix)-1,len(matrix),len(matrix))
 		if matrix[len(matrix)-1][i]=='_':flood_fill(matrix,len(matrix)-1,i,len(matrix),len(matrix))
 		if matrix[i][0]=='_':flood_fill(matrix,i,0,len(matrix),len(matrix))
+	for i in xrange(len(matrix)): #replace all _ with X
+		for j in xrange(len(matrix)):
+			if matrix[i][j] == '_': matrix[i][j]='X'
 
 #Given a matrix of ‘O’ and ‘X’, find the largest subsquare surrounded by ‘X’. Same as maximum size rectangle matrix with all 1's
 def f(matrix):
@@ -86,19 +89,6 @@ def f(matrix, num):
 		if matrix[i][j]>num:i+=1
 	return (-1,-1)
 	
-#Print all elements in sorted order from row and column wise sorted matrix
-#consider it as merging of k sorted array
-#Find a common element in all rows of a given row-wise sorted matrix
-#Kth smallest element in a row-wise and column-wise sorted 2D array
-from heapq import heappush, heappop 
-def f(matrix, k):
-	l=[]
-	n,m=len(matrix),len(matrix[0])
-	for i in xrange(m): heapq.heappush(l,(matrix[0][i], (0,i)))	
-	for i in xrange(k):
-		node,vector=heapq.heappop()
-		if vector[0]+1< n: heapq.heappush(matrix[vector[0]][vector[0]+1])
-
 #A 2d matrix of 0 and 1 in which rows are sorted. You have to find the row number which has the Maximum number of 1.
 #same as row wise and column wise start from top most if 1 move left if 0 move down
 def f(matrix):
@@ -108,7 +98,18 @@ def f(matrix):
 		while i<n and arr[i][j]==0: i+=1
 	result m-j
 
-
+#Print all elements in sorted order from row and column wise sorted matrix
+#consider it as merging of k sorted array
+#Find a common element in all rows of a given row-wise sorted matrix
+#Kth smallest element in a row-wise and column-wise sorted 2D array
+from heapq import heappush, heappop 
+def f(matrix, k):
+	l=[]
+	n,m=len(matrix),len(matrix[0])
+	for i in xrange(m): heapq.heappush(l,(matrix[0][i], (0,i)))	
+	while heapq:
+		node,vector=heapq.heappop()
+		if vector[0]+1< n: heapq.heappush(matrix[vector[0]][vector[1]+1])
 
 ================================================================================================================================
 #Unique paths
@@ -134,8 +135,8 @@ def unique_paths(matrix):
 
 
 #minimum steps to reach at the end of a matrix. Given an array of integers where each element represents the max number of steps that can be made forward from that element
-def f(matrix):
-	m,n=len(matrix),len(matrix[0])
+def f(arr):
+	m,n=len(arr),len(ar[0])
 	dp=[[9999999 for _ in xrange(n)] for _ in xrange(m)]
 	dp[0][0]=0
 	for i in xrange(n):
@@ -177,7 +178,7 @@ def f(matrix):
 			if matrix[i][j]>matrix[i][j-1]: dp[i][j]=max(dp[i][j],dp[i][j-1]+1)
 
 
-#longest increading path in a matrix if you can move in all four directions
+#longest increasing path in a matrix if you can move in all four directions
 #its increasing sequence so we dont have to maintain a visited array. just do a dfs
 # memoization can also be used here
 def dfs(i,j,n,m,matrix,l=1):
@@ -191,7 +192,7 @@ def dfs(i,j,n,m,matrix,l=1):
 result=0
 dfs(0,0,len(matrix),len(matrix[0]),matrix)
 
-#Minimum time required to rot all oranges. BFS
+#Minimum time required to rot all oranges. BFS.
 def f(matrix):
 	queue=[]
 	result=0
@@ -204,26 +205,26 @@ def f(matrix):
 		for i in xrange(l):
 			pop=queue.pop(0)
 			x,y=pop[0],pop[1]
-			if x+1<n and matrix[x+1][y]=='R':
+			if x+1<n and matrix[x+1][y]=='F':
 				queue.append((x+1,y))
-				matrix[x+1][y]='F'
-			if x-1>0 and matrix[x-1][y]=='R':
+				matrix[x+1][y]='R'
+			if x-1>0 and matrix[x-1][y]=='F':
 				queue.append((x-1,y))
-				matrix[x-1][y]='F'
-			if y+1<m and matrix[x][y+1]=='R':
+				matrix[x-1][y]='R'
+			if y+1<m and matrix[x][y+1]=='F':
 				queue.append((x,y+1))
-				matrix[x][y+1]='F'
-			if y-1<0 and matrix[x][y-1]=='R'
-				matrix[x][y-1]='F'
+				matrix[x][y+1]='R'
+			if y-1<0 and matrix[x][y-1]=='F'
+				matrix[x][y-1]='R'
 		result+=1
 	for i in xrange(n):
 		for j in xrange(m):
 			if matrix[i][j]=='R': return 9999999999
 	return result
 
-#count no of islands
-#simple count no of connected components in an undirected graph. Either change the value 1 to something else as in rotten tomatoes 
-#or keep a visited matrix
+
+#count no of islands. A group of connected 1s forms an island.
+#simple count no of connected components in an undirected graph.
 def dfs(visited,i,j,n,m,matrix):
 	visited[i][j]=True
 	if i+1<n and matrix[i+1][j]==1 and visited[i+1][j] is False: dfs(visited,i+1,j,n,m,matrix)

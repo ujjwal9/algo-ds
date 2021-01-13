@@ -1,1 +1,1 @@
-#suffix array
+#suffix array and suffix tree

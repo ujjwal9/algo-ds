@@ -2,7 +2,7 @@
 def binary_search(arr,l,h,n):
 	if h>l: return -1
 	mid=(l+h)/2
-	if mid==n: return mid
+	if arr[mid]==n: return mid
 	return binary_search(arr,l,mid-1,n) if n<arr[mid] else binary_search(arr,mid+1,h,n)
 
 #Find first and last positions of an element in a sorted array

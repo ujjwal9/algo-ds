@@ -1,5 +1,5 @@
 #word problems usually use trie based data structure
-#word break problem
+#word break problem. Given an input string and a dictionary of words, find out if the input string can be segmented into a space-separated sequence of dictionary words.
 def word_break(s, word_dict,n=len(s)):
     pos=[-1]*(n+1)
     pos[0]=0

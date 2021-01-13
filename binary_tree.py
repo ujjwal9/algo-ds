@@ -1,5 +1,9 @@
-#Types of problems in binary tree
 #Traversals, Construction and conversion, checking and printing, summation, LCA, misc
+#ATTRIBUTES : height, Depth, Diameter
+#TRAVERSAL : Preorder/Iterative, Inorder/Iterative, Postorder/Iterative, Levelorder, Verticalorder, Spiral, Diagonal, Boundary 
+#VIEW : Left view, Right view, Bottom view
+#LCA, Distance between 2 nodes,
+#Convert to ll, dll
 class Node:
 	def __init__(self, data):
 		self.data=data
@@ -7,13 +11,13 @@ class Node:
 		self.right=None
 
 ===================================================================================================================
+#think like a tree. Distance from the farthest leaf node to the node. Root height=maxedges
 def height(node):
 	if node==None: return 0
 	return max(height(node.left), height(node.right))+1
 
-def depth(node,d=0):
-	if node==None: return d
-	return max(depth(node.left,d+1), depth(node.right,d+1))
+#Think like a tree. Distance of the node from the root. Root depth=0
+depth(node)=height(root)-height(node)
 
 #diameter or the width of a tree is the number of nodes on the longest path between two end nodes
 def diameter(node):
@@ -21,7 +25,7 @@ def diameter(node):
 	if node is None: return 0
 	left,right=diameter(node.left),diameter(node.right)
 	result=max(result,1+left+right)
-	return max(left,right)
+	return max(left,right)+1
 
 ===================================================================================================================
 
@@ -54,22 +58,11 @@ def level_order(root):
 			if node.right:queue.append(node.right)
 		print '\n'
 
-def vertical_order_traversal(node):
-	if A is None: return []
-	q=[]
-    q.append((0,A))
-    d=defaultdict(list)
-    while q:
-        l=len(q)
-        for _ in xrange(l):
-            node=q.pop(0)
-            d[node[0]].append(node[1].val)
-            if node[1].left is not None: q.append((node[0]-1,node[1].left))
-            if node[1].right is not None: q.append((node[0]+1,node[1].right))
-    result=[]
-    for i in sorted(d.keys()):
-        result.append(d[i])
-    return result
+def vertical_order_traversal(node,p=0,d=defaultdict(list)):
+	if node is None: return
+	d[p].append(node)
+	vertical_order_traversal(node.left,p-1,d)
+	vertical_order_traversal(node.right,p+1,d)
 
 def level_order_spiral(node):
 	queue=[]
@@ -91,26 +84,6 @@ def diagonal_traversal(node,index=0,map=defaultdict(list)):
 	map[index].append(node.val)
 	diagonal_traversal(node.left,index+1,map)
 	diagonal_traversal(node.right,index,map)
-
-#boundary traversal of a binary tree
-#left boudary leaving the last element. All leaf nodes and the right boundary in reverse
-def left(node):
-	if node is None or (node.left is None and node.right is None) : return
-	print node.val
-	left(node.left)
-	if node.left is None and node.right: left(node.right) 
-
-def leaf(node):
-	if node is None: return
-	if node.left is None and node.right is None: print node.val
-	leaf(node.left)
-	leaf(node.right)
-
-def right(node):
-	if node is None or (node.left is None and node.right is None): return
-	print node.val
-	right(node.right)
-	if node.right is None and node.left: right(node.left)
 
 ===================================================================================================================
 
@@ -150,38 +123,29 @@ def inorder_without_recursion(root):
 
 ===================================================================================================================
 
+#boundary traversal of a binary tree
+#left boundary - leaf node + all leaf node + (right boundary - leaf)
+def left(node):
+	if node is None or (node.left is None and node.right is None): return
+	print node.val
+	left(node.left)
+
+def leaf(node):
+	if node is None: return
+	if node.left is None and node.right is None: print node.val
+	leaf(node.left)
+	leaf(node.right)
+
+def right(node):
+	if node is None or (node.left is None and node.right is None): return
+	print node.val
+	right(node.right)
+
 #bottom view is created by vertical order traveral
-def bottom_view(node):
-	queue=[]
-	queue.append(node)
-	result={}
-	mapping={}
-	mapping[node]=0
-	while queue:
-		l=len(queue)
-		for _ in xrange(l):
-			poped=queue.pop(0)
-			result[mapping[poped]]=poped.val
-			if poped.left: 
-				queue.append(poped.left)
-				mapping[poped.left]=mapping[poped]-1
-			if poped.right:
-				queue.append(poped.right)
-				mapping[poped.right]=mapping[poped]+1
 
-#left view of binary tree. Level order traversal
-def left_view(node):
-	queue=[]
-	while queue:
-		l=len(queue)
-		print queue[0]
-		for i in xrange(l):
-			node=q.pop(0)
-			if node.left: queue.append(node.left)
-			if node.right: queue.append(node.right)
+#left view of binary tree. Level order traversal. Get the first element
 
-#right view of binary tree.Level order traversal
-def right_view(node):
+#right view of binary tree. Level order traversal. Get the last element
 
 #Populating Next Right Pointers in Each Node
 def connect(self, root):
@@ -201,9 +165,9 @@ def connect(self, root):
 
 def lca(root, p, q):
 	if root is None: return None
+	if root.val==p.val or root.val==q.val: return root
     left,right=lca(root.left,p,q),lca(root.right,p,q)
-    if (right and left) or ((left or right) and node.val==p or node.val==q): return root
-    if root.val==p.val or root.val==q.val: return root
+    if right and left : return root
     return right or left
 
 #given a tree find distance between 2 nodes. Find the LCA of both the nodes and then use 
@@ -286,15 +250,13 @@ result=0
 
 def invert(node):
 	if node==None: return
-	left=invert(node.left)
-	right=invert(node.right)
-	node.left=right
-	node.right=left
+	left, right=invert(node.left), invert(node.right)
+	node.left, node.right=right, left
 	return node
 
 ===================================================================================================================
 
-#flatten binary tree to single linked list	
+#flatten binary tree to linked list	
 def bt_sll(node):
 	if node==None: return
 	left=bt_sll(node.left)

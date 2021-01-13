@@ -21,7 +21,7 @@ def insert(node, new_node):
 		else:self.insert(node.left, new_node)
 
 #delete a node 
-def   (node, v):
+def delete(node, v):
   if node is None: return None
   if node.left in None and node.right is None and node.val==v: return None
   if node.left is None and node.right is not None and node.val==v: return node.right

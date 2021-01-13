@@ -7,14 +7,15 @@ def topological_sort(node, stak=[], visited):
 	stak.append(node)
 reversed(stak)
 
-#alien dictinoary
+#alien dictinoary. Given a sorted dictionary (array of words) of an alien language, find order of characters in the language
 #take 2 words and find the first not equal alphabet and add and edge to them. Topological sort it
 def alien_dictionary(words):
 	graph=defaultdict(list)
 	for i in xrange(len(words)-1):
 		j=0
-		while j<min(len(words[i]), len(words[i+1])) and words[i][j:j+1]!=words[i+1][j:j+1]: j+=1
-		graph[words[i][j:j+1]].append(words[i+1][j:j+1])
+		while j<min(len(words[i]), len(words[i+1])) and words[i][j]==words[i+1][j]: j+=1
+		graph[words[i][j]].append(words[i+1][j])
+    
 	visited={}
 	for node in graph.keys(): visited[node]=False
 	result=[]
