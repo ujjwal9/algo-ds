@@ -19,11 +19,16 @@ def recursion(a,i=0,p_i=-1):
     if p_i==-1 or a[i]>a[p_i]:c=f(a,i+1,i)+1
     return max(c,f(a,i+1,p_i))
 
-def lis_dp(arr):
-	lis=[1]*len(arr)
-	for i in xrange(1, len(arr)):
+def lis_dp(a):
+	d=[1]*len(a)
+	for i in xrange(len(a)):
 		for j in xrange(i):
-			if arr[j]<arr[i] and lis[i]<lis[j]+1: lis[i]=lis[j]+1
+			if a[j]<a[i]: d[i]=max(d[i],d[j]+1)
+
+
+#https://community.topcoder.com/stat?c=problem_statement&pm=5922&rd=8075
+max(lis_dp(a)+lis_dp(reverse(a)))
+
 
 #Given n jobs by start time, finish time, profit>=0, max profit that you can get
 def weighted_job_scheduling(arr,n=len(arr)):

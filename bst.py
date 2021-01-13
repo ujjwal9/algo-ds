@@ -9,7 +9,7 @@ def search(node, val):
 	if node==None: return False
 	if val==node.val: return True
 	if val>node.val: return self.search(node.right, val)
-	else: return self.search(node.left, val)
+	return self.search(node.left, val)
 
 #insertion is always done at leaf
 def insert(node, new_node):
@@ -21,7 +21,7 @@ def insert(node, new_node):
 		else:self.insert(node.left, new_node)
 
 #delete a node 
-def delete(node, v):
+def   (node, v):
   if node is None: return None
   if node.left in None and node.right is None and node.val==v: return None
   if node.left is None and node.right is not None and node.val==v: return node.right
