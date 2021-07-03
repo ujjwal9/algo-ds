@@ -18,6 +18,8 @@ def last(arr,l,h,n):
 	if arr[mid]==n and (mid==len(arr)-1 or arr[mid+1]>n): return mid
 	else: first(arr,mid+1,h,n) if n>=arr[mid] else first(arr,l,mid+1,n)
 
+============================================================================================================================================
+
 #Given a sorted and rotated array find a given element using binary search approach. If there are duplicates given then it will take O(n)
 def f(arr,l,h,key):
 	if l>h: return -1
@@ -35,8 +37,10 @@ def f(s,e,arr,n=len(arr)):
 	mid=(s+e)/2
 	if mid==0 or mid==n-1: return mid
 	if arr[mid]>arr[mid-1] and arr[mid]<arr[mid+1]: return mid
-	if arr[mid]<arr[n-1]: f(s,mid-1)
+	if arr[mid]<arr[e-1]: f(s,mid-1)
 	else: f(mid+1, e)
+
+============================================================================================================================================
 
 #bitonic point in a bitonic sequence
 def bitonic(arr,l,h):

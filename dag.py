@@ -1,4 +1,4 @@
-#Topologocal sort for DAG. Linear ordering of vertices such that for every ordering of its vertices such that for every directed edge uv u comes before v in ordering
+#Topologocal sort for DAG. Linear ordering of vertices such that for every directed edge uv u comes before v in ordering
 #Add vertices in DFS then reverse.
 def topological_sort(node, stak=[], visited):
 	visited[node]=True
@@ -7,7 +7,7 @@ def topological_sort(node, stak=[], visited):
 	stak.append(node)
 reversed(stak)
 
-#alien dictinoary. Given a sorted dictionary (array of words) of an alien language, find order of characters in the language
+#alien dictionary. Given a sorted dictionary (array of words) of an alien language, find order of characters in the language
 #take 2 words and find the first not equal alphabet and add and edge to them. Topological sort it
 def alien_dictionary(words):
 	graph=defaultdict(list)
@@ -27,29 +27,31 @@ def alien_dictionary(words):
 
 #Generate all palindromic numbers less than n
 
-#course schedule. Same as finding a cycle in DAG
+#Leetcode. Course Schedule. Make a DAG and check if it non cyclic
 from collections import defaultdict
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
-        self.graph=defaultdict(list)
-        self.visited={}
-        self.parents={}
+        graph=self.make_graph(prerequisites)
+        visited,parents=[False]*numCourses,[False]*numCourses
         for i in xrange(numCourses):
-            self.visited[i]=False
-            self.parents[i]=False
-        for i in prerequisites: self.graph[i[1]].append(i[0])
-        for i in self.visited:
-          if self.visited[i] is False and self.is_cyclic(i): return False
+            if not visited[i] and self.is_cyclic(i, graph,visited,parents): return False
         return True
-          
-    def is_cyclic(self, node):
-      self.visited[node]=True
-      self.parents[node]=True
-      for i in self.graph[node]:
-        if self.parents[i] is True: return True
-        if self.visited[i] is False and self.is_cyclic(i): return True
-      self.parents[node]=False
-      return False
+    
+    def make_graph(self, p):
+        graph=defaultdict(list)
+        for i in p: graph[i[0]].append(i[1])
+        return graph
+    
+    def is_cyclic(self, node, graph, parents, visited):
+        visited[node],parents[node]=True,True
+        for i in graph[node]:
+            if parents[i]==True: return True
+            if visited[i] == False:
+                if self.is_cyclic(i,graph, parents, visited): return True
+        parents[node]=False
+        return False
+
 
 #course schedule 2. https://leetcode.com/problems/course-schedule-ii/
 #Make the graph. Find ifCyclic. ifCylic return [] else do a topological sort of the graph
+

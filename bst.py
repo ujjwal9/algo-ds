@@ -8,17 +8,17 @@ class Node:
 def search(node, val):
 	if node==None: return False
 	if val==node.val: return True
-	if val>node.val: return self.search(node.right, val)
-	return self.search(node.left, val)
+	if val>node.val: return search(node.right, val)
+	return search(node.left, val)
 
 #insertion is always done at leaf
 def insert(node, new_node):
 	if new_node.val>node.val:
-		if node.left==None and node.right==None:node.right=new_node	
-		else: self.insert(node.right, new_node)
+		if node.left==None and node.right==None: node.right=new_node	
+		else: insert(node.right, new_node)
 	if new_node.val<node.val:
-		if node.left==None and node.right==None:node.left=new_node
-		else:self.insert(node.left, new_node)
+		if node.left==None and node.right==None: node.left=new_node
+		else: insert(node.left, new_node)
 
 #delete a node 
 def delete(node, v):
@@ -83,5 +83,31 @@ def bst(parent, node):
     if parent.right is None: parent.right=node
   else: bst(parent.right, node)
 
+#Do a inorder and sum 
+class Solution(object):
+    def rangeSumBST(self, root, L, R):
+        def dfs(node):
+            if node:
+                if L <= node.val <= R:
+                    self.ans += node.val
+                if L < node.val:
+                    dfs(node.left)
+                if node.val < R:
+                    dfs(node.right)
 
-        
+        self.ans = 0
+        dfs(root)
+        return self.ans
+
+#unique bst from of an arrary from 1..n 1 2 3 4 5  
+def numTrees(self, n):
+  dp=[0]*(n+1)
+    dp[1]=1
+    for i in xrange(2,n+1):
+        for j in xrange(1,i+1):
+            right,left=1,1
+            if j-1>0: left=dp[j-1]
+            if i-j>0: right=dp[i-j]
+            dp[i]+=left*right
+    return dp[n]
+

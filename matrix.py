@@ -133,7 +133,6 @@ def unique_paths(matrix):
 		for j in xrange(1,m):
 			if matrix[i][j]==0: dp[i][j]=dp[i-1][j]+dp[i][j-1]
 
-
 #minimum steps to reach at the end of a matrix. Given an array of integers where each element represents the max number of steps that can be made forward from that element
 def f(arr):
 	m,n=len(arr),len(ar[0])

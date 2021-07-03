@@ -1,5 +1,5 @@
-#Graph:
-#Differences between a tree and graph is that graphs may contain cycles, it doesnt contains root node and it can be disconnected also. Trees no of edges is n-1 n is no of nodes.
+#Differences between a tree and graph is that graphs may contain cycles, it doesnt contains root node and it can be disconnected also. 
+#Trees no of edges is n-1 n is no of nodes.
 #To avoid processing a node more than once, we use a boolean visited array.
 from collections import defaultdict
 import sys
@@ -19,25 +19,25 @@ class Graph:
 		self.graph[u].append(v)
 
 	def DFS(self, v):
-		self.visited[v]=True
+		visited[v]=True
 		print(v)
-		for i in self.graph[v]: 
-			if self.visited[i]==False: self.DFS(i)
+		for i in graph[v]: 
+			if visited[i]==False: DFS(i)
 
 	def BFS(self, v):
-		self.visited[v] = True
+		visited[v] = True
 		dq=[]
 		dq.append(v)
 		while dq:
 			node = dq.pop(0)
 			print(node)
-			for i in self.graph[node]:
-				if(self.visited[i] == False):
-					self.visited[i] = True
+			for i in graph[node]:
+				if(visited[i] == False):
+					visited[i] = True
 					dq.append(i)
 
 	def level_order_traversal(self, v):
-		self.visited[v]=True
+		visited[v]=True
 		dq=[]
 		dq.append(v)
 		while dq:
@@ -46,58 +46,55 @@ class Graph:
 				node=dq.pop(0)
 				print(node)
 				for child in self.graph[node]:
-					if !self.visited[child]:
-						self.visited[child]=True
+					if !visited[child]:
+						visited[child]=True
 						node.append(child)
 
 ===================================================================================================================
 
-	def check_cycle_undirected_graph(self, node, parent):
-		visited[node]=True
-		for adj in graph[node]:
-			if visited[adj] and adj!=parent: return True
-			if check_cycle_undirected_graph(adj, node): return True
-		return False
-
-	def check_cycle_DAG(self, node, parents):
-		self.visited[node]=True
-		parents[node]=True
-		for i in self.graph[node]:
-			if self.visited[i]==False:
-				if self.check_cycle_DAG(i, parents) == True: return True
-			elif parents[i]==True: return True
-		parents[node]=False
-		return False
-
-	def check_if_cyclic_DAG(self):
-		parents=[False]*self.no_of_nodes
-		for i in self.graph:
-			if visited[i]==False:
-				if check_cycle_DAG(i, parents) == True: return True
-		return False
-
-===================================================================================================================
-
-	#check if a directed graph is strongly connected
-	def scc(graph):
+def check_cycle_undirected_graph(node, parent):
+	visited[node]=True
+	for adj in graph[node]:
+		if visited[adj] and adj!=parent: return True
+		if check_cycle_undirected_graph(adj, node): return True
+	return False
 
 
-	#do BFS use m=2 coloring problem and assign it to 2 coloring groups
-	def is_bapartite(self, node):
-		color=[-1]*self.no_of_nodes
-		queue=[]
-		queue.append(node)
-		while queue:
-			int l = queue.length
-			for _ in xrange(l):
-				u=queue.front()
-				for v in self.graph[u]:
-					if u in self.graph[u]: return False
-					if color[v] == -1: 
-						color[v]=1-color[u]
-						queue.push(v)
-					else if color[v] == color[u]: return False
-		return True	
+parents=[False]*no_of_nodes
+for i in self.graph:
+	if visited[i]==False:
+		if check_cycle_DAG(i, parents) == True: return True
+return False
+def check_cycle_directed_graph(node, parents):
+	visited[node]=True
+	parents[node]=True
+	for i in graph[node]:
+		if visited[i]==False:
+			if check_cycle_DAG(i, parents) == True: return True
+		elif parents[i]==True: return True
+	parents[node]=False
+	return False
+
+#check if a directed graph is strongly connected
+def scc(graph):
+
+
+#do BFS use m=2 coloring problem and assign it to 2 coloring groups
+def is_bapartite(self, node):
+	color=[-1]*no_of_nodes
+	queue=[]
+	queue.append(node)
+	while queue:
+		int l = queue.length
+		for _ in xrange(l):
+			u=queue.pop(0)
+			for v in graph[u]:
+				if u in graph[u]: return False
+				if color[v] == -1: 
+					color[v]=1-color[u]
+					queue.push(v)
+				else if color[v] == color[u]: return False
+	return True	
 
 ===================================================================================================================
 
@@ -125,9 +122,9 @@ def prims(root):
 	while node_queue:
 		popped=heapq.heappop(node_queue)
 		reached_nodes.append(popped)
-		for edge in popped.adjacencies:
-			node=edge.target
-			if node not in reached_nodes and node.min_distance>edge.weight: node.min_distance=e.weight
+		for e in popped.adjacencies:
+			node=e.target
+			if node not in reached_nodes and node.min_distance>e.weight: node.min_distance=e.weight
 			node_queue.append(node)
 			heapq.heapify(node_queue)
 
@@ -135,7 +132,6 @@ def prims(root):
 def kruskal():
 
 
-===================================================================================================================
 
 #finds min path from source to all the vertices
 #both directed and undirected graph
@@ -176,7 +172,7 @@ graph = [[0,5,INF,10],
          [INF, INF, INF, 0]]
 			
 
-#O(VE). Bellman Ford
+#O(VE). Bellman Ford. Shortest distance to all vertices from source
 #DP approach. For negative weighted graphs also
 class Graph:
 	def __init__(self, vertices):
@@ -192,11 +188,6 @@ class Graph:
 		for _ in range(self.V-1):
 			for s,d,w in self.graph:
 				if dist[s] != float("Inf") and dist[s] + w < dist[d]:	dist[d] = dist[s]+w
-
-		for s, d, w in self.graph:
-            if dist[s] != float("Inf") and dist[s] + w < dist[d]:
-                print("Graph contains negative weight cycle")
-                return
 
 
 ===================================================================================================================
@@ -227,8 +218,8 @@ def get_max_debit(arr):
 	return result
 
 def min_cash_flow(amount):
-	max_credit=get_max_credit()
-	max_debit=get_max_debit()
+	max_credit=get_max_credit(amount)
+	max_debit=get_max_debit(amount)
 	if amount[max_debit]==0 and amount[max_credit]==0: return
 	minn=min(-amount[max_debit],amount[max_credit])
 	amount[max_credit]-=minn
@@ -249,7 +240,6 @@ min_cash_flow(amount)
 
 ===================================================================================================================
 
-
 #minimum steps to reach target by a knight. BFS
 
 
@@ -258,8 +248,6 @@ min_cash_flow(amount)
 #Maximum flow
 #In graph theory, a flow network is defined as a directed graph involving a source(S) and a sink(T) and several other nodes connected with edges.
 # Each edge has an individual capacity which is the maximum limit of flow that edge could allow.
-
-
 
 
 ===================================================================================================================
@@ -283,33 +271,5 @@ f(node,Node(node.val,[]),{})
 #count no of connected components in an undirected graph
 
 
-===================================================================================================================
-
-#Leetcode. Course Schedule. Make a DAG and check if it non cyclic
-class Solution(object):
-    def canFinish(self, numCourses, prerequisites):
-        graph=self.make_graph(prerequisites)
-        visited,parents=[False]*numCourses,[False]*numCourses
-        for i in xrange(numCourses):
-            if not visited[i] and self.is_cyclic(i, graph,visited,parents): return False
-        return True
-    
-    def make_graph(self, p):
-        graph=defaultdict(list)
-        for i in p: graph[i[0]].append(i[1])
-        return graph
-    
-    def is_cyclic(self, node, graph, parents, visited):
-        visited[node],parents[node]=True,True
-        for i in graph[node]:
-            if parents[i]==True: return True
-            if visited[i] == False:
-                if self.is_cyclic(i,graph, parents, visited): return True
-        parents[node]=False
-        return False
-
-===================================================================================================================
-
-#Leetcode. Course Schedule II
 
 
